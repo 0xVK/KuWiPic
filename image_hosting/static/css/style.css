@@ -1,0 +1,40 @@
+html, body {
+	font-family: Verdana, Tahoma;
+	color: #666666;
+	margin: 0;
+	font-size: 14px;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.maintable {
+	width: 100%;
+	height: 100%;
+}
+
+
+.links {
+	text-align: center;
+	color: #666666;
+	height: 1%;
+	font-size: 14px;
+	vertical-align: bottom;
+}
+
+.links a:link, .links a:visited, .links a:active {
+	text-decoration: none;
+	color: #666666;
+}
+
+.links a:hover {
+	text-decoration: underline;
+	color: #666666;
+}
+
+.im{
+    margin: 0px 15px 25px 15px;
+}
+
+#main_title{
+    color: #1e90ff;
+}

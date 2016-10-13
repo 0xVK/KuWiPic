@@ -1,0 +1,33 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
+	<title>KuWiPic &mdash; Завантажити зображення</title>
+</head>
+
+<body>
+<table class="maintable">
+	<tr>
+		<td align="center">
+			<img src="{% static 'media/kuwipic.png' %}">
+			<form method="post" enctype="multipart/form-data" action="">
+				{% csrf_token %}
+			<input type="file" name="img" /><input type="submit" value="Завантажити!" />
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td class="links">
+			<a href="">Про сайт</a> |
+			<a href="/i/last">Останні завантаження</a> |
+			<a href="">GitHub</a>
+		</td>
+	</tr>
+
+</table>
+</body>
+</html>

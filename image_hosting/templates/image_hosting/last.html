@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Останні завантаження</title>
+</head>
+<body>
+
+<br><br><br><br>
+<h2 align="center">Останні завантаження</h2>
+<table border="1" width="50%" align="center">
+    <tr>
+
+            {% for image in images %}
+                <tr>
+                <td align="center">
+                {{ image.upload_date|date:"d.M.Y - H:m" }}
+                </td>
+                <td align="center">
+                <a href="/i/{{ image.slug }}">{{ image.image.name }}</a>
+                </td>
+                <td align="center">
+                <img src="{{ image.image.url }}" height="100" >
+                </td>
+
+                </tr>
+             {% endfor %}
+
+
+    </tr>
+
+</table>
+    <br>
+    <center><a href="/i/">Головна</a></center>
+</body>
+</html>
