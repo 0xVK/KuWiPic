@@ -1,12 +1,17 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Останні завантаження</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
 </head>
 <body>
 
 <br><br><br><br>
+{% if images %}
 <h2 align="center">Останні завантаження</h2>
 <table border="1" width="50%" align="center">
     <tr>
@@ -28,9 +33,22 @@
 
 
     </tr>
+    </table>
 
-</table>
+{% else %}
+    <h1 align="center">Завантажень немає :(</h1>
+{% endif %}
+
     <br>
-    <center><a href="/i/">Головна</a></center>
+    <table align="center">
+    <tr>
+        <td class="links">
+			<a href="/i/">Головна</a> |
+            <a href="/about">Про сайт</a> |
+			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
+		</td>
+    </tr>
+    </table>
+
 </body>
 </html>

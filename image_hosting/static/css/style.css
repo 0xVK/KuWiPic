@@ -3,7 +3,7 @@ html, body {
 	color: #666666;
 	margin: 0;
 	font-size: 14px;
-	background-color: #ffffff;
+	background-color: #dcdcdc;
 	height: 100%;
 }
 
@@ -16,8 +16,7 @@ html, body {
 .links {
 	text-align: center;
 	color: #666666;
-	height: 1%;
-	font-size: 14px;
+	font-size: 15px;
 	vertical-align: bottom;
 }
 
@@ -37,4 +36,20 @@ html, body {
 
 #main_title{
     color: #1e90ff;
+}
+
+.about_text {
+	color: #666666;
+	font-size: 16px;
+	vertical-align: bottom;
+}
+
+.about_text a:link, .about_text a:visited, .about_text a:active {
+	text-decoration: none;
+	color: #666666;
+}
+
+.about_text a:hover {
+	text-decoration: underline;
+	color: #000;
 }

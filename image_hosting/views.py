@@ -50,14 +50,17 @@ def upload_image(request):
 def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
-
-    return render(request, 'image_hosting/picture.html', context={'image': img})
+    img_size = round(img.image.size / 1024, 1)
+    return render(request, 'image_hosting/picture.html', context={'image': img, 'img_size': img_size})
 
 
 def last_images(request):
 
-    ims = Image_model.objects.all().order_by('upload_date')
-
+    ims = Image_model.objects.all().order_by('-upload_date')
     return render(request, 'image_hosting/last.html', {'images': ims})
+
+
+def about(request):
+    return render(request, 'image_hosting/about.html')
 
 

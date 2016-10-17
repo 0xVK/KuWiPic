@@ -1,3 +1,42 @@
+{% load staticfiles %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KuWiPic - {{ image.image.name }}</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
+</head>
+<body>
 
-<img src="{{ image.image.url }}">
+<table border="0" width="100%" style="">
+    <tr>
+        <td bgcolor="gray" style="padding:0px; text-align:center;">
+           <img src="{{ image.image.url }}" align="center">
+        </td>
+    </tr>
+    <tr>
+        <td class="about_text" style='padding:0px 0px 0px 30px'> <br>
+
+            <b>Назва:</b> {{ image.image.name }} <br>
+            <b>Дата завантаження:</b> {{ image.upload_date }} <br>
+            <b>Розмір:</b> {{ image.image.width }}x{{ image.image.height }}px <br>
+            <b><a href="{{ image.image.url }}">Відкрити оригінал ({{ img_size }} кб.)</a></b>
+
+        </td>
+    </tr>
+
+</table>
+    <br><br>
+    <table align="center">
+        <td class="links">
+			<a href="/i/">Головна</a> |
+            <a href="/i/last">Останні завантаження</a> |
+            <a href="/about">Про сайт</a> |
+			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
+		</td>
+    </table>
+
+</body>
+</html>

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from image_hosting.views import index
+from image_hosting.views import index, about
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
+    url(r'^about/', about),
     url(r'^i/', include('image_hosting.urls')),
     url(r'^$', index)
 ]
