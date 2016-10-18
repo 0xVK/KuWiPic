@@ -8,11 +8,19 @@ from django.conf import settings
 import os
 
 
+class ImageManager(models.Manager):
+
+    def get_latest(self, to=15):
+        return self.order_by('-upload_date')[:to]
+
+
 class Image(models.Model):
 
     image = models.ImageField()
     upload_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
+
+    objects = ImageManager()
 
     class Meta:
         verbose_name = 'Зображення'

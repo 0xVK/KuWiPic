@@ -13,7 +13,7 @@
 <table class="maintable">
 	<tr>
 		<td align="center">
-			<img src="{% static 'media/kuwipic.png' %}">
+			<a href="/i/"><img src="{% static 'media/kuwipic.png' %}"></a>
 			<form method="post" enctype="multipart/form-data" action="">
 				{% csrf_token %}
 			<input type="file" name="img" /><input type="submit" value="Завантажити!" />

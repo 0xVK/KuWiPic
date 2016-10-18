@@ -58,7 +58,7 @@ def show_image(request, slug):
 
 def last_images(request):
 
-    ims = Image_model.objects.all().order_by('-upload_date')
+    ims = Image_model.objects.get_latest(to=15)
     return render(request, 'image_hosting/last.html', {'images': ims})
 
 
