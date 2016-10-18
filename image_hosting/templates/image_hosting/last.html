@@ -1,22 +1,51 @@
-<p>{% load staticfiles %}</p>
-<p>Останні завантаження <br /><br /><br /><br /> {% if images %}</p>
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Останні завантаження</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
+</head>
+<body>
+
+<br><br><br><br>
+{% if images %}
 <h2 align="center">Останні завантаження</h2>
-<p>{% for image in images %}{% endfor %}</p>
 <table border="1" width="50%" align="center">
-<tbody>
-<tr>
-<td align="center">{{ image.upload_date|date:"d.M.Y - H:m" }}</td>
-<td align="center"><a href="/i/{{ image.slug }}"><img src="{{ image.image.url }}" alt="" height="100" /></a></td>
-</tr>
-</tbody>
-</table>
-<p>{% else %}</p>
-<h1 align="center">Завантажень немає :(</h1>
-<p>{% endif %} </p>
-<table align="center">
-<tbody>
-<tr>
-<td class="links"><a href="/i/">Головна</a> | <a href="/about">Про сайт</a> | <a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a></td>
-</tr>
-</tbody>
-</table>
+    <tr>
+
+            {% for image in images %}
+                <tr>
+                <td align="center">
+                {{ image.upload_date|date:"d.M.Y - H:m" }}
+                </td>
+                <td align="center">
+                <a href="/i/{{ image.slug }}"><img src="{{ image.image.url }}" height="100" ></a>
+                </td>
+
+                </tr>
+             {% endfor %}
+
+
+    </tr>
+    </table>
+
+{% else %}
+    <h1 align="center">Завантажень немає :(</h1>
+{% endif %}
+
+    <br>
+    <table align="center">
+    <tr>
+        <td class="links">
+			<a href="/i/">Головна</a> |
+            <a href="/about">Про сайт</a> |
+			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
+		</td>
+    </tr>
+    </table>
+
+</body>
+</html>
