@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 from django.db import models
-import datetime, string, random
 from PIL import Image as PImage
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.conf import settings
-import os
 
 
 class ImageManager(models.Manager):
@@ -19,6 +15,7 @@ class Image(models.Model):
     image = models.ImageField()
     upload_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
+    views = models.IntegerField(default=0)
 
     objects = ImageManager()
 

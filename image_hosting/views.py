@@ -52,6 +52,8 @@ def upload_image(request):
 def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
+    img.views += 1
+    img.save()
     img_size = round(img.image.size / 1024, 1)
     return render(request, 'image_hosting/picture.html', context={'image': img, 'img_size': img_size})
 

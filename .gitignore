@@ -1,1 +1,13 @@
-/idea/*
+# IDE configs
+.idea/
+
+
+# BD
+db.sqlite3
+
+*.pyc
+*.pyo
+
+# caches
+KuWiPic/__pycache__
+files/*
