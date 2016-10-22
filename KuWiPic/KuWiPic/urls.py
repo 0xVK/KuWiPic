@@ -22,10 +22,10 @@ from django.conf import settings
 
 urlpatterns = [
 
+    url(r'^', include('core.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^about/', about),
-    url(r'^i/', include('image_hosting.urls')),
-    url(r'^$', index)
+    url(r'^', include('image_hosting.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

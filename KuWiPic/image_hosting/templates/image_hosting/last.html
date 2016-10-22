@@ -22,7 +22,7 @@
                 {{ image.upload_date|date:"d.M.Y - H:m" }}
                 </td>
                 <td align="center">
-                <a href="/i/{{ image.slug }}"><img src="{{ image.image.url }}" height="100" ></a>
+                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" height="100" ></a>
                 </td>
 
                 </tr>
@@ -40,7 +40,7 @@
     <table align="center">
     <tr>
         <td class="links">
-			<a href="/i/">Головна</a> |
+			<a href="/">Головна</a> |
             <a href="/about">Про сайт</a> |
 			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
 		</td>

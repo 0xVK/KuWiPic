@@ -12,8 +12,18 @@
 <body>
 <table class="maintable">
 	<tr>
+		<td align="right">
+			{% if user.is_authenticated %}
+				<a href="/profile">{{ user.username }}</a>
+				<a href="/logout">Вихід</a>
+			{% else %}
+				<a href="/signin">Вхід</a>
+			{% endif %}
+		</td>
+	</tr>
+	<tr>
 		<td align="center">
-			<a href="/i/"><img src="{% static 'media/kuwipic.png' %}"></a>
+			<a href="/"><img src="{% static 'media/kuwipic.png' %}"></a>
 			<form method="post" enctype="multipart/form-data" action="">
 				{% csrf_token %}
 			<input type="file" name="img" /><input type="submit" value="Завантажити!" />
@@ -23,7 +33,7 @@
 	<tr>
 		<td class="links">
 			<a href="/about">Про сайт</a> |
-			<a href="/i/last">Останні завантаження</a> |
+			<a href="/last">Останні завантаження</a> |
 			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
 		</td>
 	</tr>
