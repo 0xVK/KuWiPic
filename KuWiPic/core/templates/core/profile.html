@@ -1,0 +1,53 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
+	<title>KuWiPic &mdash; {{ user.username }}</title>
+</head>
+</head>
+<body>
+    <table border="1" width="100%">
+        <tr>
+            <td width="100%" align="center" colspan="4">
+                <h2>KuWiPic - {{ user.username }}</h2>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%"> - </td>
+            <td>
+                <h2>2 images</h2>
+
+                <form method="get">
+                    {{ FilterSortForm.filter_albums }}
+                    {{ FilterSortForm.sort_by }}
+                    <input type="submit">
+                </form>
+                {% if images %}
+                    {% for image in images %}
+                        <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
+                    {% endfor %}
+                {% else %}
+                    <h2>Зображень немає :(</h2>
+                {% endif %}
+            </td>
+            <td width="18%">
+                {{ FilterSortForm.errors }}
+                {{ im }}
+            </td>
+            <td width="15%">
+                -
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" colspan="4">
+                footer
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

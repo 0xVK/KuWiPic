@@ -5,7 +5,7 @@ urlpatterns = [
 
     url(r'signin/$', SignIn.as_view()),
     url(r'logout/$', log_out),
-    url(r'profile/$', profile),
+    url(r'u/(?P<username>[-\w]+)/$', profile),
 ]
 
 
