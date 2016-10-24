@@ -1,0 +1,49 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> {{ album.name }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
+</head>
+<body>
+
+<table border="1" width="100%">
+        <tr>
+            <td width="100%" align="center" colspan="4">
+                <h2>KuWiPic - {{ album.name }}</h2>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%"> - </td>
+            <td>
+                <h2>{{ album.name }} </h2>
+                <h3><i>{{ album.images_in_album.count }} images</i></h3>
+
+                {% for image in images %}
+                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="580px" ></a>
+                {% endfor %}
+            </td>
+
+            <td width="18%">
+                <p><b>Назва:</b> {{ album.name }}</p>
+                <p><b>Власник:</b> {{ album.owner }}</p>
+                <p><b>Тип:</b> {{ album.private_policy }}</p>
+                <p><b>Дата створення:</b> {{ album.create_date }}</p>
+                <p><b>Дата редагування:</b> {{ album.edit_date }}</p>
+            </td>
+            <td width="15%">
+                -
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" colspan="4">
+                footer
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

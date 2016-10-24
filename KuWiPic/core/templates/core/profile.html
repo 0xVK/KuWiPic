@@ -36,8 +36,20 @@
                 {% endif %}
             </td>
             <td width="18%">
-                {{ FilterSortForm.errors }}
-                {{ im }}
+                <h3>Мої альбоми:</h3>
+                {% if albums %}
+                {% for album in albums %}
+                <a href="/a/{{ album.id }}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
+                {% endfor %}
+                {% else %}
+                Немає
+                {% endif %}
+                <h3>Створити альбом</h3>
+                <form method="post" action="/create_alb/">
+                    {% csrf_token %}
+                    {{ CreateAlbmFm.as_p }}
+                    <p><input type="submit", value="Створити"></p>
+                </form>
             </td>
             <td width="15%">
                 -

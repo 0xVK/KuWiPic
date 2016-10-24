@@ -1,18 +1,42 @@
 # -*- coding: utf-8 -*-
-
 from django.db import models
 from PIL import Image as PImage
+from django.contrib.auth.models import User
+
+
+class Album(models.Model):
+    PRIVATE = 'PRT'
+    PUBLIC = 'PBC'
+    UNLISTED = 'ULS'
+    ACTIVITY_TYPES = (
+        (PRIVATE, 'Private'),
+        (PUBLIC, 'Public'),
+        (UNLISTED, 'Unlisted'))
+    name = models.CharField(max_length=35, verbose_name='Назва')
+    owner = models.ForeignKey(User)
+    private_policy = models.CharField(choices=ACTIVITY_TYPES, max_length=3, verbose_name='Тип')
+    create_date = models.DateTimeField(auto_now_add=True)
+    edit_date = models.DateTimeField(blank=True)
+
+    class Meta:
+        verbose_name = 'Альбом'
+        verbose_name_plural = 'Альбоми'
+
+    def __str__(self):
+        return '{} [{}] [{}] - {}'.format(self.name.capitalize(),
+                                         self.images_in_album.count(),
+                                         self.private_policy,
+                                         self.owner.username.capitalize())
 
 
 class ImageManager(models.Manager):
-
     def get_latest(self, to=15):
         return self.order_by('-upload_date')[:to]
 
 
 class Image(models.Model):
-
     image = models.ImageField()
+    album = models.ForeignKey(Album, null=True, blank=True, related_name='images_in_album')
     upload_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
     views = models.IntegerField(default=0)
@@ -22,6 +46,9 @@ class Image(models.Model):
     class Meta:
         verbose_name = 'Зображення'
         verbose_name_plural = 'Зображення'
+
+    def __str__(self):
+        return self.slug
 
     def get_absolute_url(self):
         return self.slug
