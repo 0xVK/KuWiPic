@@ -25,19 +25,36 @@ class AddImagesToAlbumForm(forms.Form):
 
 class CreateAlbumForm(forms.ModelForm):
 
-    PRIVATE = 'PRT'
-    PUBLIC = 'PBC'
-    UNLISTED = 'ULS'
-    ACTIVITY_TYPES = (
+    PRIVATE = 'Private'
+    PUBLIC = 'Public'
+    UNLISTED = 'Unlisted'
+    PRIVACY_TYPES = (
         (PUBLIC, 'Public'),
         (PRIVATE, 'Private'),
         (UNLISTED, 'Unlisted'))
 
     name = forms.CharField(max_length=25, label='Ім`я')
-    private_policy = forms.ChoiceField(choices=ACTIVITY_TYPES, label='Тип')
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип')
 
     class Meta:
         model = Album
         fields = ['name', 'private_policy']
 
+
+class EditAlbumForm(forms.ModelForm):
+
+    PRIVATE = 'Private'
+    PUBLIC = 'Public'
+    UNLISTED = 'Unlisted'
+    PRIVACY_TYPES = (
+        (PUBLIC, 'Public'),
+        (PRIVATE, 'Private'),
+        (UNLISTED, 'Unlisted'))
+    name = forms.CharField(max_length=25, label='Ім`я')
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип')
+    images = forms.ImageField(required=False)
+
+    class Meta:
+        model = Album
+        fields = ['name', 'private_policy', 'images']
 

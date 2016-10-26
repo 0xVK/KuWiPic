@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import FormView
 from django.contrib.auth import logout, login
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
-from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm
+from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm
 from image_hosting.models import Album, Image
 
 
@@ -70,10 +70,10 @@ def create_alb(request):
             owner = request.user
             private_policy = CreateAlbmFm.cleaned_data['private_policy']
 
-            Album.objects.create(name=name, owner=owner, private_policy=private_policy).save()
+            al = Album.objects.create(name=name, owner=owner, private_policy=private_policy)
+            al.save()
 
-            return HttpResponse('okey')
-
+            return redirect(al)
         else:
             return HttpResponseBadRequest('Errors:' + str(CreateAlbmFm.errors))
 
@@ -81,7 +81,7 @@ def create_alb(request):
         return HttpResponseBadRequest('invalid method(GET)')
 
 
-def alb(request, a_id):
+def alb_show(request, a_id):
 
     al = get_object_or_404(Album, id=a_id)
     ims = al.images_in_album.all()
@@ -94,3 +94,19 @@ def alb(request, a_id):
     return render(request, 'core/album.html', data)
 
 
+def alb_edit(request, a_id):
+
+    if request.method == 'GET':
+
+        al = get_object_or_404(Album, id=a_id)
+        ims = al.images_in_album.all()
+
+        edit_alb_fm = EditAlbumForm(instance=al)
+
+        data = {
+            'album': al,
+            'images': ims,
+            'EditAlbFm': edit_alb_fm,
+        }
+
+        return render(request, 'core/album_edit.html', data)

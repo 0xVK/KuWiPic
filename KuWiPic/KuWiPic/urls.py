@@ -24,7 +24,7 @@ urlpatterns = [
 
     url(r'^', include('core.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^about/', about),
+    url(r'^about/', about, name='about'),
     url(r'^', include('image_hosting.urls')),
 ]
 

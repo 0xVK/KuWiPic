@@ -19,23 +19,21 @@
         <tr>
             <td width="15%"> - </td>
             <td>
-                <h2>{{ album.name }} </h2>
-                <h3><a href="{% url 'album_edit' a_id=album.id %}">ред.</a></h3>
-                <h3><i>{{ album.images_in_album.count }} images</i></h3>
+                <form method="post">
+                    <h2>{{ EditAlbFm.name.label }}: {{ EditAlbFm.name }}</h2>
+                    <h3>{{ EditAlbFm.private_policy.label }}: {{ EditAlbFm.private_policy }}</h3>
 
                 {% for image in images %}
-                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="580px" ></a>
+                <p><a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
+                <br><a>Видалити</a></p>
                 {% endfor %}
+                Завантажити файли: {{ EditAlbFm.images }}
+                <p><input type="submit" value="Зберегти"></p>
+                </form>
             </td>
 
             <td width="18%">
-                <p><b>Назва:</b> {{ album.name }}</p>
-                <p><b>Власник:</b><a href="/u/{{ album.owner }}"> {{ album.owner }}</a></p>
-                <p><b>Тип:</b> {{ album.private_policy }}</p>
-                <p><b>Дата створення:</b> {{ album.create_date }}</p>
-                {% if edit_date %}
-                <p><b>Дата редагування:</b> {{ album.edit_date }}</p>
-                {% endif %}
+            =
             </td>
             <td width="15%">
                 -

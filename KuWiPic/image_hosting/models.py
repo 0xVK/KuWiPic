@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 from PIL import Image as PImage
 from django.contrib.auth.models import User
 
 
 class Album(models.Model):
-    PRIVATE = 'PRT'
-    PUBLIC = 'PBC'
-    UNLISTED = 'ULS'
-    ACTIVITY_TYPES = (
+    PRIVATE = 'Private'
+    PUBLIC = 'Public'
+    UNLISTED = 'Unlisted'
+    PRIVATE_TYPES = (
         (PRIVATE, 'Private'),
         (PUBLIC, 'Public'),
         (UNLISTED, 'Unlisted'))
     name = models.CharField(max_length=35, verbose_name='Назва')
     owner = models.ForeignKey(User)
-    private_policy = models.CharField(choices=ACTIVITY_TYPES, max_length=3, verbose_name='Тип')
+    private_policy = models.CharField(choices=PRIVATE_TYPES, max_length=8, verbose_name='Тип')
     create_date = models.DateTimeField(auto_now_add=True)
-    edit_date = models.DateTimeField(blank=True)
+    edit_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Альбом'
@@ -27,6 +28,9 @@ class Album(models.Model):
                                          self.images_in_album.count(),
                                          self.private_policy,
                                          self.owner.username.capitalize())
+
+    def get_absolute_url(self):
+        return '/a/{}'.format(self.id)
 
 
 class ImageManager(models.Manager):
