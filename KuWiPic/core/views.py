@@ -35,27 +35,35 @@ def profile(request, username):
 
     if request.method == 'GET':
 
-        AddImsToAlbFm = AddImagesToAlbumForm()
-        CreateAlbmFm = CreateAlbumForm()
+        add_ims_to_alb_fm = AddImagesToAlbumForm()
+        create_albm_fm = CreateAlbumForm()
 
-        FilterSortFm = FilterSortingInProfileForm(u, request.GET)
+        filter_sort_fm = FilterSortingInProfileForm(u, request.GET)
 
-        if FilterSortFm.is_valid():
+        if filter_sort_fm.is_valid():
 
+            filter_album_id = filter_sort_fm.cleaned_data['filter_albums']
+            if filter_album_id:
+                albms = Album.objects.filter(owner=request.user, id=filter_album_id)
+            else:
+                albms = Album.objects.filter(owner=request.user)
+
+        else:
             albms = Album.objects.filter(owner=request.user)
 
-            ims = []
-            for alb in albms:
-                ims += alb.images_in_album.all()
+        ims = []
+        for alb in albms:
+            ims += alb.images_in_album.all()
 
-            data = {
-                'FilterSortForm': FilterSortFm,
-                'AddImsToAlbForm': AddImsToAlbFm,
-                'CreateAlbmFm': CreateAlbmFm,
-                'images': ims,
-                'albums': albms,
-                'is_page_owner': is_page_ow
-                    }
+
+        data = {
+            'FilterSortForm': filter_sort_fm,
+            'AddImsToAlbForm': add_ims_to_alb_fm,
+            'CreateAlbmFm': create_albm_fm,
+            'images': ims,
+            'albums': albms,
+            'is_page_owner': is_page_ow
+                }
 
     return render(request, template_name='core/profile.html', context=data)
 
