@@ -55,13 +55,14 @@ def profile(request, username):
         for alb in albms:
             ims += alb.images_in_album.all()
 
+        all_albms = Album.objects.filter(owner=request.user)
 
         data = {
             'FilterSortForm': filter_sort_fm,
             'AddImsToAlbForm': add_ims_to_alb_fm,
             'CreateAlbmFm': create_albm_fm,
             'images': ims,
-            'albums': albms,
+            'albums': all_albms,
             'is_page_owner': is_page_ow
                 }
 
