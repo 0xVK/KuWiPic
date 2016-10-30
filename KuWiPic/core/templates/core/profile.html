@@ -10,6 +10,11 @@
 	<title>KuWiPic &mdash; {{ user.username }}</title>
 </head>
 </head>
+
+<script>
+
+</script>
+
 <body>
     <table border="1" width="100%">
         <tr>
@@ -22,11 +27,11 @@
             <td>
                 <h2>2 images</h2>
 
-                <form method="get">
+                <p><form method="get" name="filter_form" onchange="document.forms['filter_form'].submit()">
                     {{ FilterSortForm.filter_albums }}
                     {# {{ FilterSortForm.sort_by }} #}
-                    <input type="submit">
-                </form>
+                    {# <input type="submit"> #}
+                </form></p>
                 {% if images %}
                     {% for image in images %}
                         <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
