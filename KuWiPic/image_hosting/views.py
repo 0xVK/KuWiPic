@@ -20,30 +20,7 @@ def upload_image(request):
 
     if request.method == 'POST':
 
-        try:
-            uploaded_img = request.FILES.get('img')  # take uploaded picture
-            uploaded_img_ext = uploaded_img.name.split('.')[1]
-
-            valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
-
-            if uploaded_img_ext not in valid_extensions:
-                return HttpResponse('invalid file extension!')
-
-            random_slug = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase +
-
-                                                string.digits) for x in range(4))  # random generate slug
-
-            im = Image_model(image=uploaded_img, slug=random_slug)
-            im.save()
-
-            return redirect(im)
-
-        except Exception as e:
-
-            print(e)
-            return HttpResponseServerError('server error(')
-
-        return redirect('/')
+        return redirect(save_image(request.FILES.get('img')))
 
     else:
         return render(request, 'image_hosting/index.html')
@@ -68,3 +45,27 @@ def about(request):
     return render(request, 'image_hosting/about.html')
 
 
+def save_image(img, alb=None):
+
+    try:
+        uploaded_img = img
+        uploaded_img_ext = uploaded_img.name.split('.')[1]
+        uploaded_img_ext = uploaded_img_ext.lower()
+        valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
+
+        if uploaded_img_ext not in valid_extensions:
+            return HttpResponse('invalid file extension!')
+
+        random_slug = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase +
+
+                                            string.digits) for x in range(4))  # random generate slug
+
+        im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
+        im.save()
+
+        return im
+
+    except Exception as e:
+
+        print(e)
+        return HttpResponseServerError('server error(', str(e))

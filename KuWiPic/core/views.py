@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.contrib.auth.models import User
 from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm
 from image_hosting.models import Album, Image
+from image_hosting.views import save_image
 
 
 class SignIn(FormView):
@@ -107,15 +108,37 @@ def alb_edit(request, a_id):
 
     if request.method == 'GET':
 
-        al = get_object_or_404(Album, id=a_id)
-        ims = al.images_in_album.all()
+        alb = get_object_or_404(Album, id=a_id)
+        ims = alb.images_in_album.all()
 
-        edit_alb_fm = EditAlbumForm(instance=al)
+        edit_alb_fm = EditAlbumForm(instance=alb)
 
         data = {
-            'album': al,
+            'album': alb,
             'images': ims,
             'EditAlbFm': edit_alb_fm,
         }
 
-        return render(request, 'core/album_edit.html', data)
+    if request.method == 'POST':
+
+        edit_alb_fm = EditAlbumForm(request.POST, request.FILES)
+
+        if edit_alb_fm.is_valid():
+            al = Album.objects.get(id=a_id)
+            ow = request.user
+            if edit_alb_fm.cleaned_data['name']:
+                al.name = edit_alb_fm.cleaned_data['name']
+            if edit_alb_fm.cleaned_data['private_policy']:
+                al.private_policy = edit_alb_fm.cleaned_data['private_policy']
+
+            if edit_alb_fm.cleaned_data['images']:
+                im = edit_alb_fm.cleaned_data['images']
+                save_image(im, al)
+
+            al.save()
+            return redirect(al)
+
+
+        data = {}
+
+    return render(request, 'core/album_edit.html', data)
