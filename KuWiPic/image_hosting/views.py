@@ -49,8 +49,7 @@ def save_image(img, alb=None):
 
     try:
         uploaded_img = img
-        uploaded_img_ext = uploaded_img.name.split('.')[1]
-        uploaded_img_ext = uploaded_img_ext.lower()
+        uploaded_img_ext = uploaded_img.name.split('.')[1].lower()
         valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
 
         if uploaded_img_ext not in valid_extensions:
