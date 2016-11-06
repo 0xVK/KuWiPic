@@ -13,17 +13,20 @@
 <table border="0" width="100%" style="">
     <tr>
         <td bgcolor="gray" style="padding:0px; text-align:center;">
-           <img src="{{ image.image.url }}" align="center">
+           <img src="{{ image.image.url }}" align="center" width="860px">
         </td>
     </tr>
     <tr>
         <td class="about_text" style='padding:0px 0px 0px 30px'> <br>
 
             <b>Назва:</b> {{ image.image.name }} <br>
+            {% if image.album %}
+            <b>Альбом:</b> <a href="{% url 'album_show' a_id=image.album.id %}">{{ image.album.name }} <br></a>
+            {% endif %}
             <b>Дата завантаження:</b> {{ image.upload_date }} <br>
             <b>Переглядів:</b> {{ image.views }} <br>
             <b>Розмір:</b> {{ image.image.width }}x{{ image.image.height }}px <br>
-            <b><a href="{{ image.image.url }}">Відкрити оригінал ({{ img_size }} кб.)</a></b>
+            <b><a href="{{ image.image.url }}" target="_blank">Відкрити оригінал ({{ img_size }} кб.)</a></b>
 
         </td>
     </tr>

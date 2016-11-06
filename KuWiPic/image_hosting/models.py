@@ -3,7 +3,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from PIL import Image as PImage
 from django.contrib.auth.models import User
-
+import os
 
 class Album(models.Model):
     PRIVATE = 'Private'
@@ -63,15 +63,18 @@ class Image(models.Model):
         self.image.name = self.slug + '.jpg'
         super(Image, self).save()
 
-        im = PImage.open(self.image.path)
+        # im = PImage.open(self.image.path)
+        #
+        # width, height = im.size
+        # if width > 860:
+        #     new_width = 860
+        #     new_height = (height * 860) / width
+        #     new_size = new_width, new_height
+        #     im.thumbnail(new_size, PImage.ANTIALIAS)
+        #     im.save(self.image.path)
 
-        width, height = im.size
-        if width > 860:
-            new_width = 860
-            new_height = (height * 860) / width
-            new_size = new_width, new_height
-            im.thumbnail(new_size, PImage.ANTIALIAS)
-            im.save(self.image.path)
+    def delete(self, using=None, keep_parents=False):
 
+        os.remove(self.image.path)
 
 

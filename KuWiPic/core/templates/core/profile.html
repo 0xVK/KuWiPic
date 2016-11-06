@@ -22,9 +22,8 @@
         <tr>
             <td width="15%"> - </td>
             <td>
-                <h2>2 images</h2>
-
-                <p><form method="get" name="filter_form" onchange="document.forms['filter_form'].submit()">
+                <p>{{ images_count }} images
+                <form method="get" name="filter_form" onchange="document.forms['filter_form'].submit()">
                     {{ FilterSortForm.filter_albums }}
                     {# {{ FilterSortForm.sort_by }} #}
                     {# <input type="submit"> #}

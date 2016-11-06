@@ -64,7 +64,8 @@ def profile(request, username):
             'CreateAlbmFm': create_albm_fm,
             'images': ims,
             'albums': all_albms,
-            'is_page_owner': is_page_ow
+            'is_page_owner': is_page_ow,
+            'images_count': len(ims)
                 }
 
     return render(request, template_name='core/profile.html', context=data)

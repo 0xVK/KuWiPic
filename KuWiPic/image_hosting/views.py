@@ -55,9 +55,7 @@ def save_image(img, alb=None):
         if uploaded_img_ext not in valid_extensions:
             return HttpResponse('invalid file extension!')
 
-        random_slug = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase +
-
-                                            string.digits) for x in range(4))  # random generate slug
+        random_slug = get_random_slug(Image_model)
 
         im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
         im.save()
@@ -68,3 +66,16 @@ def save_image(img, alb=None):
 
         print(e)
         return HttpResponseServerError('server error(', str(e))
+
+
+def get_random_slug(model):
+
+    while(True):
+
+        rand_slug = ''.join(random.choice(string.ascii_lowercase +
+                                        string.ascii_uppercase +
+                                        string.digits)
+                          for x in range(4))
+
+        if not model.objects.filter(slug=rand_slug).exists():
+            return rand_slug
