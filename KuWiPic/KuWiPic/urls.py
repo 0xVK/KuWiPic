@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from image_hosting.views import index, about
+from image_hosting.views import about
 from django.conf.urls.static import static
 from django.conf import settings
 
