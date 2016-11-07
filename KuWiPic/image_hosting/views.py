@@ -12,10 +12,6 @@ import datetime
 from django.core.files import File
 
 
-def index(request):
-    return HttpResponseRedirect('/i/')
-
-
 def upload_image(request):
 
     if request.method == 'POST':
@@ -73,8 +69,8 @@ def get_random_slug(model):
     while(True):
 
         rand_slug = ''.join(random.choice(string.ascii_lowercase +
-                                        string.ascii_uppercase +
-                                        string.digits)
+                                          string.ascii_uppercase +
+                                          string.digits)
                           for x in range(4))
 
         if not model.objects.filter(slug=rand_slug).exists():
