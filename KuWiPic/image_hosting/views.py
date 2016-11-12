@@ -24,6 +24,7 @@ def upload_image(request):
 
 def show_image(request, slug):
 
+    print(slug)
     img = get_object_or_404(Image_model, slug=slug)
     img.views += 1
     img.save()

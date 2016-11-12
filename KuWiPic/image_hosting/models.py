@@ -5,6 +5,7 @@ from PIL import Image as PImage
 from django.contrib.auth.models import User
 import os
 
+
 class Album(models.Model):
     PRIVATE = 'Private'
     PUBLIC = 'Public'
@@ -76,5 +77,7 @@ class Image(models.Model):
     def delete(self, using=None, keep_parents=False):
 
         os.remove(self.image.path)
+
+        super(Image, self).delete()
 
 

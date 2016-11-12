@@ -143,3 +143,20 @@ def alb_edit(request, a_id):
         data = {}
 
     return render(request, 'core/album_edit.html', data)
+
+
+def delete_photo(request, slug):
+
+    im = Image.objects.get(slug=slug)
+    im.delete()
+
+    return redirect(im.album)
+
+
+def delete_album(request, a_id):
+
+    al = get_object_or_404(Album, id=a_id)
+    al.delete()
+
+    return redirect('/u/{}'.format(request.user.username))
+

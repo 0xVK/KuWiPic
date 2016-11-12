@@ -50,7 +50,7 @@ class EditAlbumForm(forms.ModelForm):
         (PUBLIC, 'Public'),
         (PRIVATE, 'Private'),
         (UNLISTED, 'Unlisted'))
-    name = forms.CharField(max_length=25, label='Ім`я')
+    name = forms.CharField(max_length=25, label='Ім`я', required=False)
     private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип')
     images = forms.ImageField(required=False)
 
