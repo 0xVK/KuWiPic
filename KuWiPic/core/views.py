@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import FormView
 from django.contrib.auth import logout, login
@@ -149,7 +150,6 @@ def delete_photo(request, slug):
 
     im = Image.objects.get(slug=slug)
     im.delete()
-
     return redirect(im.album)
 
 
@@ -157,6 +157,5 @@ def delete_album(request, a_id):
 
     al = get_object_or_404(Album, id=a_id)
     al.delete()
-
     return redirect('/u/{}'.format(request.user.username))
 

@@ -41,7 +41,7 @@ class ImageManager(models.Manager):
 
 class Image(models.Model):
     image = models.ImageField()
-    album = models.ForeignKey(Album, null=True, blank=True, related_name='images_in_album')
+    album = models.ForeignKey(Album, null=True, blank=True, related_name='images_in_album', on_delete=models.CASCADE)
     upload_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
     views = models.IntegerField(default=0)

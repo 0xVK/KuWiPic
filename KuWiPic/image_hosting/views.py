@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
-from image_hosting.models import Image as Image_model
-from django.conf import settings as django_settings
-import os
+from image_hosting.models import Image as Image_model, Album
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404, redirect
 import string
 import random
-from PIL import Image
-import datetime
-from django.core.files import File
 
 
 def upload_image(request):
@@ -24,7 +20,6 @@ def upload_image(request):
 
 def show_image(request, slug):
 
-    print(slug)
     img = get_object_or_404(Image_model, slug=slug)
     img.views += 1
     img.save()
@@ -39,7 +34,18 @@ def last_images(request):
 
 
 def about(request):
-    return render(request, 'image_hosting/about.html')
+
+    count_users = User.objects.all().count()
+    count_albums = Album.objects.all().count()
+    count_images = Image_model.objects.all().count()
+
+    data = {
+        'count_users': count_users,
+        'count_albums': count_albums,
+        'count_images': count_images,
+    }
+
+    return render(request, 'image_hosting/about.html', data)
 
 
 def save_image(img, alb=None):
