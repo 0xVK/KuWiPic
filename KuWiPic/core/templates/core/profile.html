@@ -11,7 +11,23 @@
 </head>
 </head>
 
+<script type="text/javascript">
 
+            function showHide(element_id) {
+                //Если элемент с id-шником element_id существует
+                if (document.getElementById(element_id)) {
+                    //Записываем ссылку на элемент в переменную obj
+                    var obj = document.getElementById(element_id);
+                    //Если css-свойство display не block, то:
+                    if (obj.style.display != "block") {
+                        obj.style.display = "block"; //Показываем элемент
+                    }
+                    else obj.style.display = "none"; //Скрываем элемент
+                }
+                //Если элемент с id-шником element_id не найден, то выводим сообщение
+                else alert("Элемент с id: " + element_id + " не найден!");
+            }
+        </script>
 <body>
     <table border="0" width="100%">
         <tr>
@@ -37,6 +53,7 @@
                 {% endif %}
             </td>
             <td width="18%">
+                <div class="title_text">
                 <h3>Мої альбоми:</h3>
                 {% if albums %}
                 {% for album in albums %}
@@ -45,21 +62,27 @@
                 {% else %}
                 Немає
                 {% endif %}
-                <h3>Створити альбом</h3>
+                </div>
+                <div class="title_text">
+                <a href="javascript:void(0)" onclick="showHide('create_alb_block')"><h3>Створити альбом</h3></a>
+                <div id="create_alb_block" style="display: none;">
                 <form method="post" action="/create_alb/">
                     {% csrf_token %}
                     {{ CreateAlbmFm.as_p }}
                     <p><input type="submit", value="Створити"></p>
                 </form>
+                </div></div>
             </td>
             <td width="15%">
                 -
             </td>
         </tr>
         <tr>
-            <td width="100%" colspan="4">
-                footer
-            </td>
+            <td class="links" width="100%" colspan="4">
+			<a href="/">Головна</a> |
+			<a href="/last">Останні завантаження</a> |
+			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
+		    </td>
         </tr>
     </table>
 </body>

@@ -54,3 +54,21 @@ html, body {
 	text-decoration: underline;
 	color: #000;
 }
+
+.title_text {
+	color: #666666;
+	font-size: 16px;
+	text-decoration: none;
+	vertical-align: bottom;
+}
+
+.title_text a:link, .title_text a:visited, .title_text a:active {
+	text-decoration: none;
+	color: #666666;
+}
+
+.title_text a:hover {
+	text-decoration: none;
+	color: #000;
+}
+

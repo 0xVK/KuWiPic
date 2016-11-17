@@ -24,7 +24,7 @@
                 <h3><i>{{ album.images_in_album.count }} images</i></h3>
 
                 {% for image in images %}
-                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="580px" ></a>
+                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="580px" ></a><br><br>
                 {% endfor %}
             </td>
 
@@ -42,9 +42,11 @@
             </td>
         </tr>
         <tr>
-            <td width="100%" colspan="4">
-                footer
-            </td>
+            <td class="links" width="100%" colspan="4">
+			<a href="/">Головна</a> |
+			<a href="/last">Останні завантаження</a> |
+			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
+		    </td>
         </tr>
     </table>
 

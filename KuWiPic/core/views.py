@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm
 from image_hosting.models import Album, Image
 from image_hosting.views import save_image
-
+import datetime
 
 class SignIn(FormView):
 
@@ -137,7 +137,9 @@ def alb_edit(request, a_id):
                 im = edit_alb_fm.cleaned_data['images']
                 save_image(im, al)
 
+            al.edit_date = datetime.datetime.now()
             al.save()
+            print(al.edit_date)
             return redirect(al)
 
 
