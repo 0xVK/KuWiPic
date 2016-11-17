@@ -13,14 +13,14 @@
 <table border="0" width="100%">
         <tr>
             <td width="100%" align="center" colspan="4">
-                <h2>KuWiPic - {{ album.name }}</h2>
+                <h2><a href="/">KuWiPic</a> - {{ album.name }}</h2>
             </td>
         </tr>
         <tr>
             <td width="15%"> - </td>
             <td>
                 <h2>{{ album.name }} </h2>
-                <h3><a href="{% url 'album_edit' a_id=album.id %}">ред.</a></h3>
+                <h3><a href="{% url 'album_edit' a_id=album.id %}">редагувати</a></h3>
                 <h3><i>{{ album.images_in_album.count }} images</i></h3>
 
                 {% for image in images %}
@@ -45,6 +45,7 @@
             <td class="links" width="100%" colspan="4">
 			<a href="/">Головна</a> |
 			<a href="/last">Останні завантаження</a> |
+            <a href="/about">Про сайт</a> |
 			<a href="https://github.com/0xVK/KuWiPic" target="_blank">GitHub</a>
 		    </td>
         </tr>

@@ -54,3 +54,7 @@ html, body {
 	text-decoration: underline;
 	color: #000;
 }
+
+.errorlist {
+    color: red;
+}

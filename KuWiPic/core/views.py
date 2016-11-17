@@ -3,11 +3,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.views.generic import FormView
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
-from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm
+from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm, SignUpForm
 from image_hosting.models import Album, Image
 from image_hosting.views import save_image
 import datetime
@@ -22,6 +23,31 @@ class SignIn(FormView):
         self.user = form.get_user()
         login(self.request, self.user)
         return super(SignIn, self).form_valid(form)
+
+
+def sign_up(request):
+
+    if request.method == 'GET':
+        sign_up_fm = SignUpForm()
+        return render(request, 'core/signup.html', {'form': sign_up_fm})
+
+    if request.method == 'POST':
+
+        sign_up_fm = SignUpForm(request.POST)
+
+        if sign_up_fm.is_valid():
+
+            username = sign_up_fm.cleaned_data.get('username')
+            password = sign_up_fm.cleaned_data.get('password')
+
+            User.objects.create_user(username=username, password=password)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return redirect('/')
+
+        else:
+            return render(request, 'core/signup.html', {'form': sign_up_fm})
 
 
 def log_out(request):
@@ -152,7 +178,8 @@ def delete_photo(request, slug):
 
     im = Image.objects.get(slug=slug)
     im.delete()
-    return redirect(im.album)
+    print(request.path)
+    return redirect('/a/{}/edit'.format(im.album.id))
 
 
 def delete_album(request, a_id):
