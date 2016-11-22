@@ -4,25 +4,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Останні завантаження</title>
+    <title>Користувачі</title>
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="{% static 'media/ico.png' %}" type="image/x-icon" />
 </head>
 <body>
 
 <br><br><br><br>
-{% if images %}
-<h2 align="center">Останні завантаження</h2>
+{% if users %}
+<h2 align="center">Список користувачів: </h2>
 <table border="1" width="50%" align="center">
     <tr>
-
-            {% for image in images %}
+                <tr>
+                <td>
+                    <p align="center"><b>Логін</b></p>
+                </td>
+                <td>
+                    <p align="center"><b>Дата реєстрації</b></p>
+                </td>
+            {% for u in users %}
                 <tr>
                 <td align="center">
-                {{ image.upload_date|date:"d.M.Y - H:m" }}
+                <a href="/u/{{ u.username }}">{{ u.username }}</a>
                 </td>
                 <td align="center">
-                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" height="100" ></a>
+                {{ u.date_joined }}
                 </td>
 
                 </tr>
@@ -33,7 +39,7 @@
     </table>
 
 {% else %}
-    <h1 align="center">Завантажень немає :(</h1>
+    <h1 align="center">Пусто поки шо</h1>
 {% endif %}
 
     <br>

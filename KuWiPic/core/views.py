@@ -225,3 +225,9 @@ def delete_album(request, a_id):
         al.delete()
         return redirect('/u/{}'.format(request.user.username))
 
+
+def show_users(request):
+
+    users = User.objects.all()
+
+    return render(request, 'core/users.html', {'users': users})
