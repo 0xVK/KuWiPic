@@ -20,7 +20,9 @@
             <td width="15%"> - </td>
             <td>
                 <h2>{{ album.name }} </h2>
+                {% if is_alb_owner %}
                 <h3><a href="{% url 'album_edit' a_id=album.id %}">редагувати</a></h3>
+                {% endif %}
                 <h3><i>{{ album.images_in_album.count }} images</i></h3>
 
                 {% for image in images %}

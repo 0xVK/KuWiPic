@@ -23,6 +23,10 @@ class Album(models.Model):
     class Meta:
         verbose_name = 'Альбом'
         verbose_name_plural = 'Альбоми'
+        permissions = (
+            ('album_owner', 'Album owner'),
+
+        )
 
     def __str__(self):
         return '{} [{}] [{}] - {}'.format(self.name.capitalize(),

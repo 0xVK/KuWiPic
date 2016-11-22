@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError, HttpResponseForbidden
 from image_hosting.models import Image as Image_model, Album
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,10 +21,15 @@ def upload_image(request):
 def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
-    img.views += 1
-    img.save()
-    img_size = round(img.image.size / 1024, 1)
-    return render(request, 'image_hosting/picture.html', context={'image': img, 'img_size': img_size})
+
+    if img.album.private_policy == 'Private' and not request.user.has_perm('image_hosting.album_owner', img.album):
+        return HttpResponseForbidden('Http Response Forbidden for show')
+
+    else:
+        img.views += 1
+        img.save()
+        img_size = round(img.image.size / 1024, 1)
+        return render(request, 'image_hosting/picture.html', context={'image': img, 'img_size': img_size})
 
 
 def last_images(request):

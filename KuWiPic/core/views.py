@@ -2,16 +2,18 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
+from guardian.shortcuts import assign_perm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.views.generic import FormView
 from django.contrib.auth import logout, login, authenticate
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib.auth.models import User
 from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToAlbumForm, EditAlbumForm, SignUpForm
 from image_hosting.models import Album, Image
 from image_hosting.views import save_image
 import datetime
+
 
 class SignIn(FormView):
 
@@ -72,18 +74,26 @@ def profile(request, username):
 
             filter_album_id = filter_sort_fm.cleaned_data['filter_albums']
             if filter_album_id:
-                albms = Album.objects.filter(owner=request.user, id=filter_album_id)
+                albms = Album.objects.filter(owner=u, id=filter_album_id)
             else:
-                albms = Album.objects.filter(owner=request.user)
+                albms = Album.objects.filter(owner=u)
 
         else:
-            albms = Album.objects.filter(owner=request.user)
+            albms = Album.objects.filter(owner=u)
 
         ims = []
+        ims_for_guest = []
         for alb in albms:
             ims += alb.images_in_album.all()
+            if alb.private_policy == 'Public':
+                ims_for_guest += alb.images_in_album.all()
 
-        all_albms = Album.objects.filter(owner=request.user)
+        all_albms = Album.objects.filter(owner=u)
+        all_albms_for_guest = []
+
+        for a in all_albms:
+            if a.private_policy == 'Public':
+                all_albms_for_guest.append(a)
 
         data = {
             'FilterSortForm': filter_sort_fm,
@@ -92,7 +102,10 @@ def profile(request, username):
             'images': ims,
             'albums': all_albms,
             'is_page_owner': is_page_ow,
-            'images_count': len(ims)
+            'images_count': len(ims),
+            'all_albms_for_guest': all_albms_for_guest,
+            'images_for_guest': ims_for_guest,
+            'images_for_guest_count': len(ims_for_guest),
                 }
 
     return render(request, template_name='core/profile.html', context=data)
@@ -111,6 +124,8 @@ def create_alb(request):
             al = Album.objects.create(name=name, owner=owner, private_policy=private_policy)
             al.save()
 
+            assign_perm('image_hosting.album_owner', request.user, al)
+
             return redirect(al)
         else:
             return HttpResponseBadRequest('Errors:' + str(CreateAlbmFm.errors))
@@ -122,69 +137,91 @@ def create_alb(request):
 def alb_show(request, a_id):
 
     al = get_object_or_404(Album, id=a_id)
-    ims = al.images_in_album.all()
 
-    data = {
-        'album': al,
-        'images': ims,
-    }
+    is_alb_owner = al.owner == request.user
 
-    return render(request, 'core/album.html', data)
+    if al.private_policy == 'Private' and not request.user.has_perm('image_hosting.album_owner', al):
+        return HttpResponseForbidden('Http Response Forbidden for alb show')
+
+    else:
+
+        ims = al.images_in_album.all()
+
+        data = {
+            'album': al,
+            'images': ims,
+            'is_alb_owner': is_alb_owner,
+        }
+
+        return render(request, 'core/album.html', data)
 
 
 def alb_edit(request, a_id):
 
-    if request.method == 'GET':
+    al = get_object_or_404(Album, id=a_id)
 
-        alb = get_object_or_404(Album, id=a_id)
-        ims = alb.images_in_album.all()
+    if not request.user.has_perm('image_hosting.album_owner', al):
+        return HttpResponseForbidden('Http Response Forbidden for edit')
 
-        edit_alb_fm = EditAlbumForm(instance=alb)
+    else:
+        if request.method == 'GET':
 
-        data = {
-            'album': alb,
-            'images': ims,
-            'EditAlbFm': edit_alb_fm,
-        }
+            ims = al.images_in_album.all()
 
-    if request.method == 'POST':
+            edit_alb_fm = EditAlbumForm(instance=al)
 
-        edit_alb_fm = EditAlbumForm(request.POST, request.FILES)
+            data = {
+                'album': al,
+                'images': ims,
+                'EditAlbFm': edit_alb_fm,
+            }
 
-        if edit_alb_fm.is_valid():
-            al = Album.objects.get(id=a_id)
-            ow = request.user
-            if edit_alb_fm.cleaned_data['name']:
-                al.name = edit_alb_fm.cleaned_data['name']
-            if edit_alb_fm.cleaned_data['private_policy']:
-                al.private_policy = edit_alb_fm.cleaned_data['private_policy']
+        if request.method == 'POST':
 
-            if edit_alb_fm.cleaned_data['images']:
-                im = edit_alb_fm.cleaned_data['images']
-                save_image(im, al)
+            edit_alb_fm = EditAlbumForm(request.POST, request.FILES)
 
-            al.edit_date = datetime.datetime.now()
-            al.save()
-            print(al.edit_date)
-            return redirect(al)
+            if edit_alb_fm.is_valid():
+                al = Album.objects.get(id=a_id)
+                ow = request.user
+                if edit_alb_fm.cleaned_data['name']:
+                    al.name = edit_alb_fm.cleaned_data['name']
+                if edit_alb_fm.cleaned_data['private_policy']:
+                    al.private_policy = edit_alb_fm.cleaned_data['private_policy']
+
+                if edit_alb_fm.cleaned_data['images']:
+                    im = edit_alb_fm.cleaned_data['images']
+                    save_image(im, al)
+
+                al.edit_date = datetime.datetime.now()
+                al.save()
+                print(al.edit_date)
+                return redirect(al)
 
 
-        data = {}
+            data = {}
 
-    return render(request, 'core/album_edit.html', data)
+        return render(request, 'core/album_edit.html', data)
 
 
 def delete_photo(request, slug):
 
-    im = Image.objects.get(slug=slug)
-    im.delete()
-    print(request.path)
-    return redirect('/a/{}/edit'.format(im.album.id))
+    im = get_object_or_404(Image, slug=slug)
+
+    if not request.user.has_perm('image_hosting.album_owner', im.album):
+        return HttpResponseForbidden('Http Response Forbidden for delete photo')
+    else:
+        im.delete()
+        print(request.path)
+        return redirect('/a/{}/edit'.format(im.album.id))
 
 
 def delete_album(request, a_id):
 
     al = get_object_or_404(Album, id=a_id)
-    al.delete()
-    return redirect('/u/{}'.format(request.user.username))
+
+    if not request.user.has_perm('image_hosting.album_owner', al):
+        return HttpResponseForbidden('Http Response Forbidden for delete album')
+    else:
+        al.delete()
+        return redirect('/u/{}'.format(request.user.username))
 

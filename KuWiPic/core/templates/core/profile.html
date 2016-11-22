@@ -29,12 +29,18 @@
             }
         </script>
 <body>
+
+
     <table border="0" width="100%">
         <tr>
             <td width="100%" align="center" colspan="4">
                 <h2>KuWiPic - {{ user.username }}</h2>
             </td>
         </tr>
+
+    {% if is_page_owner %}
+    <!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+
         <tr>
             <td width="15%"> - </td>
             <td>
@@ -77,6 +83,44 @@
                 -
             </td>
         </tr>
+
+        <!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+        {% else %}
+        <!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+
+         <tr>
+            <td width="15%"> - </td>
+            <td>
+                <p>{{ images_for_guest_count }} images </p>
+
+                {% if images %}
+                    {% for image in images_for_guest %}
+                        <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
+                    {% endfor %}
+                {% else %}
+                    <h2>Зображень немає :(</h2>
+                {% endif %}
+            </td>
+            <td width="18%">
+                <div class="title_text">
+                <h3>Альбоми:</h3>
+                {% if albums %}
+                {% for album in all_albms_for_guest %}
+                <a href="/a/{{ album.id }}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
+                {% endfor %}
+                {% else %}
+                Немає
+                {% endif %}
+                </div>
+            </td>
+            <td width="15%">
+                -
+            </td>
+        </tr>
+
+         <!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+        {% endif %}
+
         <tr>
             <td class="links" width="100%" colspan="4">
 			<a href="/">Головна</a> |
