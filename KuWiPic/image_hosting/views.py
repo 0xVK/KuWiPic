@@ -22,7 +22,7 @@ def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
 
-    if img.album.private_policy == 'Private' and not request.user.has_perm('image_hosting.album_owner', img.album):
+    if (img.album and img.album.private_policy == 'Private') and not request.user.has_perm('image_hosting.album_owner', img.album):
         return HttpResponseForbidden('Http Response Forbidden for show')
 
     else:
