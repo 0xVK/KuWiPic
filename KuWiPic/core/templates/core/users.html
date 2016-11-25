@@ -16,7 +16,7 @@
 <table border="1" width="50%" align="center">
     <tr>
                 <tr>
-                <td>
+                <td width="40%">
                     <p align="center"><b>Логін</b></p>
                 </td>
                 <td>
@@ -24,8 +24,8 @@
                 </td>
             {% for u in users %}
                 <tr>
-                <td align="center">
-                <a href="/u/{{ u.username }}">{{ u.username }}</a>
+                <td align="center" class="links">
+                <p><a href="/u/{{ u.username }}">{{ u.username }}</a></p>
                 </td>
                 <td align="center">
                 {{ u.date_joined }}
