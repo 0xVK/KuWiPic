@@ -12,7 +12,7 @@
 <body>
 <table class="maintable">
 	<tr>
-		<td align="right">
+		<td align="right" class="userbar_text">
 			{% if user.is_authenticated %}
 				<a href="/u/{{ user.username }}">{{ user.username }}</a>
 				<a href="/logout">вихід</a>

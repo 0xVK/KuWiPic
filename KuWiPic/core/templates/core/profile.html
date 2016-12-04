@@ -40,7 +40,7 @@
 
     {% if is_page_owner %}
     <!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
-
+    
         <tr>
             <td width="15%"> - </td>
             <td>
@@ -52,7 +52,7 @@
                 </form></p>
                 {% if images %}
                     {% for image in images %}
-                        <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
+                        <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" width="180px" ></a>
                     {% endfor %}
                 {% else %}
                     <h2>Зображень немає :(</h2>
@@ -63,7 +63,7 @@
                 <h3>Мої альбоми:</h3>
                 {% if albums %}
                 {% for album in albums %}
-                <a href="/a/{{ album.id }}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
+                <a href="{% url 'album_show' al_slug=album.slug %}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
                 {% endfor %}
                 {% else %}
                 Немає
@@ -72,7 +72,7 @@
                 <div class="title_text">
                 <a href="javascript:void(0)" onclick="showHide('create_alb_block')"><h3>Створити альбом</h3></a>
                 <div id="create_alb_block" style="display: none;">
-                <form method="post" action="/create_alb/">
+                <form method="post" action="/a/create_alb/">
                     {% csrf_token %}
                     {{ CreateAlbmFm.as_p }}
                     <p><input type="submit", value="Створити"></p>

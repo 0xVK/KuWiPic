@@ -13,6 +13,7 @@ from core.forms import FilterSortingInProfileForm, CreateAlbumForm, AddImagesToA
 from image_hosting.models import Album, Image
 from image_hosting.views import save_image
 import datetime
+from image_hosting.views import get_random_slug
 
 
 class SignIn(FormView):
@@ -106,6 +107,7 @@ def profile(request, username):
             'all_albms_for_guest': all_albms_for_guest,
             'images_for_guest': ims_for_guest,
             'images_for_guest_count': len(ims_for_guest),
+            'user': u,
                 }
 
     return render(request, template_name='core/profile.html', context=data)
@@ -120,8 +122,8 @@ def create_alb(request):
             name = CreateAlbmFm.cleaned_data['name']
             owner = request.user
             private_policy = CreateAlbmFm.cleaned_data['private_policy']
-
-            al = Album.objects.create(name=name, owner=owner, private_policy=private_policy)
+            random_slug = get_random_slug(Album)
+            al = Album.objects.create(name=name, owner=owner, private_policy=private_policy, slug=random_slug)
             al.save()
 
             assign_perm('image_hosting.album_owner', request.user, al)
@@ -134,9 +136,9 @@ def create_alb(request):
         return HttpResponseBadRequest('invalid method(GET)')
 
 
-def alb_show(request, a_id):
+def alb_show(request, al_slug):
 
-    al = get_object_or_404(Album, id=a_id)
+    al = get_object_or_404(Album, slug=al_slug)
 
     is_alb_owner = al.owner == request.user
 
@@ -156,9 +158,9 @@ def alb_show(request, a_id):
         return render(request, 'core/album.html', data)
 
 
-def alb_edit(request, a_id):
+def alb_edit(request, al_slug):
 
-    al = get_object_or_404(Album, id=a_id)
+    al = get_object_or_404(Album, slug=al_slug)
 
     if not request.user.has_perm('image_hosting.album_owner', al):
         return HttpResponseForbidden('Http Response Forbidden for edit')
@@ -181,7 +183,7 @@ def alb_edit(request, a_id):
             edit_alb_fm = EditAlbumForm(request.POST, request.FILES)
 
             if edit_alb_fm.is_valid():
-                al = Album.objects.get(id=a_id)
+                al = Album.objects.get(slug=al_slug)
                 ow = request.user
                 if edit_alb_fm.cleaned_data['name']:
                     al.name = edit_alb_fm.cleaned_data['name']
@@ -212,12 +214,12 @@ def delete_photo(request, slug):
     else:
         im.delete()
         print(request.path)
-        return redirect('/a/{}/edit'.format(im.album.id))
+        return redirect('/a/{}/edit'.format(im.album.slug))
 
 
-def delete_album(request, a_id):
+def delete_album(request, al_slug):
 
-    al = get_object_or_404(Album, id=a_id)
+    al = get_object_or_404(Album, slug=al_slug)
 
     if not request.user.has_perm('image_hosting.album_owner', al):
         return HttpResponseForbidden('Http Response Forbidden for delete album')

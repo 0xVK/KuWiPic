@@ -3,15 +3,15 @@ from .views import log_out, SignIn, profile, create_alb, alb_show, alb_edit, del
 
 urlpatterns = [
 
-    url(r'signin/$', SignIn.as_view()),
-    url(r'signup/$', sign_up, name='reg'),
-    url(r'logout/$', log_out, name='logout'),
-    url(r'users/$', show_users, name='users'),
-    url(r'create_alb/$', create_alb, name='create_album'),
-    url(r'a/(?P<a_id>\d+)/$', alb_show, name='album_show'),
-    url(r'a/(?P<a_id>\d+)/edit/$', alb_edit, name='album_edit'),
-    url(r'a/(?P<a_id>\d+)/del/$', delete_album, name='album_delete'),
-    url(r'u/(?P<username>[-\w]+)/$', profile, name='profile'),
+    url(r'^signin/$', SignIn.as_view()),
+    url(r'^signup/$', sign_up, name='reg'),
+    url(r'^logout/$', log_out, name='logout'),
+    url(r'^users/$', show_users, name='users'),
+    url(r'^a/create_alb/$', create_alb, name='create_album'),
+    url(r'^a/(?P<al_slug>[-\w]+)/$', alb_show, name='album_show'),
+    url(r'^a/(?P<al_slug>[-\w]+)/edit/$', alb_edit, name='album_edit'),
+    url(r'^a/(?P<al_slug>[-\w]+)/del/$', delete_album, name='album_delete'),
+    url(r'^u/(?P<username>[-\w]+)/$', profile, name='profile'),
 ]
 
 

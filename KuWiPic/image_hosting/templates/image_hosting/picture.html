@@ -21,7 +21,7 @@
 
             <b>Назва:</b> {{ image.image.name }} <br>
             {% if image.album %}
-            <b>Альбом:</b> <a href="{% url 'album_show' a_id=image.album.id %}">{{ image.album.name }} <br></a>
+            <b>Альбом:</b> <a href="{% url 'album_show' al_slug=image.album.slug %}">{{ image.album.name }} <br></a>
             {% endif %}
             <b>Дата завантаження:</b> {{ image.upload_date }} <br>
             <b>Переглядів:</b> {{ image.views }} <br>

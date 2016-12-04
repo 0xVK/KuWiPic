@@ -75,3 +75,20 @@ html, body {
 .errorlist{
     color: red;
 }
+
+.userbar_text {
+	color: #666666;
+	font-size: 16px;
+	text-decoration: none;
+	vertical-align: bottom;
+}
+
+.userbar_text a:link, .userbar_text a:visited, .userbar_text a:active {
+	text-decoration: none;
+	color: #666666;
+}
+
+.userbar_text a:hover {
+	text-decoration: none;
+	color: #000;
+}

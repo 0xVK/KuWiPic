@@ -22,7 +22,7 @@
                 {{ image.upload_date|date:"d.M.Y - H:i" }}
                 </td>
                 <td align="center">
-                <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" height="100" ></a>
+                <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" height="100" ></a>
                 </td>
 
                 </tr>

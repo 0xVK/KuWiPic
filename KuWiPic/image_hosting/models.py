@@ -16,6 +16,7 @@ class Album(models.Model):
         (UNLISTED, 'Unlisted'))
     name = models.CharField(max_length=35, verbose_name='Назва')
     owner = models.ForeignKey(User)
+    slug = models.SlugField()
     private_policy = models.CharField(choices=PRIVATE_TYPES, max_length=8, verbose_name='Тип')
     create_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(blank=True, null=True)
@@ -35,7 +36,7 @@ class Album(models.Model):
                                          self.owner.username.capitalize())
 
     def get_absolute_url(self):
-        return '/a/{}'.format(self.id)
+        return '/a/{}'.format(self.slug)
 
 
 class ImageManager(models.Manager):
@@ -60,7 +61,7 @@ class Image(models.Model):
         return self.slug
 
     def get_absolute_url(self):
-        return self.slug
+        return '/i/{}'.format(self.slug)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
