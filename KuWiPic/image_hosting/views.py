@@ -12,7 +12,11 @@ def upload_image(request):
 
     if request.method == 'POST':
 
-        return redirect(save_image(request.FILES.get('img')))
+        saved_img = save_image(request.FILES.get('img'))
+        if saved_img:
+            return redirect(saved_img)
+        else:
+            return HttpResponse('image type error')
 
     else:
         return render(request, 'image_hosting/index.html')
@@ -62,14 +66,13 @@ def save_image(img, alb=None):
         valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
 
         if uploaded_img_ext not in valid_extensions:
-            return HttpResponse('invalid file extension!')
+            return None
 
-        random_slug = get_random_slug(Image_model)
-
-        im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
-        im.save()
-
-        return im
+        else:
+            random_slug = get_random_slug(Image_model)
+            im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
+            im.save()
+            return im
 
     except Exception as e:
 

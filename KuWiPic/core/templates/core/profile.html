@@ -95,7 +95,7 @@
 
                 {% if images %}
                     {% for image in images_for_guest %}
-                        <a href="/{{ image.slug }}"><img src="{{ image.image.url }}" width="180px" ></a>
+                        <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" width="180px" ></a>
                     {% endfor %}
                 {% else %}
                     <h2>Зображень немає :(</h2>
@@ -106,7 +106,7 @@
                 <h3>Альбоми:</h3>
                 {% if albums %}
                 {% for album in all_albms_for_guest %}
-                <a href="/a/{{ album.id }}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
+                <a href="{% url 'album_show' al_slug=album.slug %}"><p>{{ album.name }} ({{ album.images_in_album.count }})</p></a>
                 {% endfor %}
                 {% else %}
                 Немає
