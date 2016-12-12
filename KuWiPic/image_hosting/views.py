@@ -2,6 +2,7 @@
 
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError, HttpResponseForbidden
 from image_hosting.models import Image as Image_model, Album
+from .models import Comment
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 import string
@@ -33,7 +34,10 @@ def show_image(request, slug):
         img.views += 1
         img.save()
         img_size = round(img.image.size / 1024, 1)
-        return render(request, 'image_hosting/picture.html', context={'image': img, 'img_size': img_size})
+        comments = Comment.objects.filter(image=img)
+
+        data = {'image': img, 'img_size': img_size, 'comments': comments}
+        return render(request, 'image_hosting/picture.html', context=data)
 
 
 def last_images(request):
@@ -102,3 +106,15 @@ def get_random_slug(model):
 
         if not model.objects.filter(slug=rand_slug).exists():
             return rand_slug
+
+
+def comment_image(request, slug):
+
+    if request.method == 'POST':
+        img = get_object_or_404(Image_model, slug=slug)
+        comment_text = request.POST.get('comment_text')
+        print(comment_text)
+        Comment(text=comment_text, user=request.user, image=img).save()
+
+        return redirect(img)
+

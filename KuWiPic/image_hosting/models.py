@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.urlresolvers import reverse
-from PIL import Image as PImage
 from django.contrib.auth.models import User
 import os
 
@@ -38,10 +36,14 @@ class Album(models.Model):
     def get_absolute_url(self):
         return '/a/{}'.format(self.slug)
 
+# ===============================================================================================
+
 
 class ImageManager(models.Manager):
     def get_latest(self, to=15):
         return self.order_by('-upload_date')[:to]
+
+# ===============================================================================================
 
 
 class Image(models.Model):
@@ -85,4 +87,14 @@ class Image(models.Model):
 
         super(Image, self).delete()
 
+# ===============================================================================================
 
+
+class Comment(models.Model):
+    text = models.TextField(max_length=500)
+    user = models.ForeignKey(User)
+    image = models.ForeignKey(Image)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-date', )
