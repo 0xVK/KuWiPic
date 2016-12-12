@@ -60,19 +60,30 @@ def about(request):
 
 def save_image(img, alb=None):
 
+    import imghdr
+
+    # try:
+    #     uploaded_img = img
+    #     uploaded_img_ext = uploaded_img.name.split('.')[1].lower()
+    #     valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
+    #
+    #     if uploaded_img_ext not in valid_extensions:
+    #         return None
+    #
+    #     else:
+    #         random_slug = get_random_slug(Image_model)
+    #         im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
+    #         im.save()
+    #         return im
+
     try:
-        uploaded_img = img
-        uploaded_img_ext = uploaded_img.name.split('.')[1].lower()
-        valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
-
-        if uploaded_img_ext not in valid_extensions:
-            return None
-
-        else:
+        if imghdr.what(img):
             random_slug = get_random_slug(Image_model)
-            im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
+            im = Image_model(image=img, slug=random_slug, album=alb)
             im.save()
             return im
+        else:
+            return None
 
     except Exception as e:
 
