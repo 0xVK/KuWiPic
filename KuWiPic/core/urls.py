@@ -3,7 +3,7 @@ from .views import log_out, SignIn, profile, create_alb, alb_show, alb_edit, del
 
 urlpatterns = [
 
-    url(r'^signin/$', SignIn.as_view()),
+    url(r'^signin/$', SignIn.as_view(), name='sign_in'),
     url(r'^signup/$', sign_up, name='reg'),
     url(r'^logout/$', log_out, name='logout'),
     url(r'^users/$', show_users, name='users'),

@@ -28,7 +28,7 @@ class Album(models.Model):
         )
 
     def __str__(self):
-        return '{} [{}] [{}] - {}'.format(self.name.capitalize(),
+        return u'{} [{}] [{}] - {}'.format(self.name.capitalize(),
                                          self.images_in_album.count(),
                                          self.private_policy,
                                          self.owner.username.capitalize())
@@ -56,8 +56,9 @@ class Image(models.Model):
     objects = ImageManager()
 
     class Meta:
-        verbose_name = 'Зображення'
-        verbose_name_plural = 'Зображення'
+        verbose_name = u'Зображення'
+        verbose_name_plural = u'Зображення'
+        ordering = ('-upload_date', )
 
     def __str__(self):
         return self.slug

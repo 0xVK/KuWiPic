@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic &mdash; Список користувачів {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .last_images{
+    max-height: 300px;
+    max-width: 500px;
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
+          <h3>Останні завантаження</h3><br>
+          <table class="table table-hover">
+          {% if images %}
+          {% for image in images %}
+          <tr>
+            <td><a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" class="last_images" ></a></td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <div style="margin-top:120px;">
+          <h4>Пустотаа...</h4>
+          </div>
+          {% endif %}
+          </table>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+{% endblock body %}

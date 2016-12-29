@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} Про KuWiPic {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet"> 
+{% endblock head %}
+
+{% block body %}
+  
+  <div class="text-center about_block">
+    <a href="/"><img src="{% static 'img/kuwipic.png' %}" width="140px"></a>
+    <p class="kwp-text">
+      <span style="color:blue">K</span>
+      <span style="color:fuchsia">u</span>
+      <span style="color:cadetblue">W</span>
+      <span style="color:red">i</span>
+      <span style="color:chartreuser">P</span>
+      <span style="color:darkturquoise">i</span>
+      <span style="color:coral">C</span>         
+    </p>
+    <p style="font-size: 26px;"><i> Мабуть найкращий хостинг картинок в радіусі 18 метрів ;) </i></p>
+    <div class="stats"> 
+    <p><b>Користувачів зареєстровано:</b> {{ count_users }}</p>
+    <p><b>Альбомів створено:</b> {{ count_albums }}</p>
+    <p><b>Фотографій завантажено:</b> {{ count_images }}</p>
+    <p><b>Коментаріїв написано:</b> {{ count_comments }}</p>
+    </div>
+  </div>
+  
+{% endblock body %}
+
+

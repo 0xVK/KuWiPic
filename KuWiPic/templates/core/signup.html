@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic &mdash; реєстрація {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .singin_form{
+/*    text-align: center;*/
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: snow;
+  }
+</style>
+{% endblock head %}
+
+{% block body %}
+      
+  <form method="post" class="singin_form">
+    <div class="form-group">
+      <label for="input_login">Логін</label>
+      {% if form.username.errors %}
+      {{ form.username.errors }}
+      {% endif %}
+      <input type="text" name="username" class="form-control" id="input_login" placeholder="Введіть логін">
+    </div>
+    <div class="form-group">
+      <label for="input_pass">Пароль</label>
+      <input type="password" name="password" class="form-control" id="input_pass" placeholder="Введіть пароль">
+    </div>
+    <div class="form-group">
+      <label for="input_pass">Пароль ще раз</label>
+      {% if form.password.errors %}
+      {{ form.password.errors }}
+      {% endif %}
+      <input type="password" name="confirm_password" class="form-control" id="input_pass" placeholder="Введіть пароль">
+    </div>
+  {% csrf_token %}
+  <input class="btn btn-primary" type="submit" value="Реєстрація">
+  </form>
+      
+{% endblock body %}

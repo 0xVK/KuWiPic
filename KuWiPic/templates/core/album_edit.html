@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic &mdash; {{ album.name }} edit{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .album_info_edit{
+    width: 300px;
+  }
+  
+  .img_alb_edit{
+    max-height: 380px;
+    max-width: 320px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .img_alb_edit_block{
+    background: #F5F5F5;
+  }
+  .edit_imgs_block{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .alb_title {
+    padding-top: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 28px;
+  }
+  
+  div.container > div.content > div.edit_imgs_block > form > div.img_alb_edit_block a.btn.btn-warning{
+   vertical-align: top;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  
+</style>
+
+
+{% endblock head %}
+
+{% block body %}
+  <div class="edit_imgs_block">
+  <div class="alb_title">
+    {{ album.name }} (редагування)
+  </div>
+  <form method="post" enctype="multipart/form-data">
+   <div class="album_info_edit">
+    <div style="font-size:18px;">
+      {{ EditAlbFm.name.label }}:</div> {{ EditAlbFm.name }}<br>
+     <div style="font-size:18px;">
+     {{ EditAlbFm.private_policy.label }}:</div> {{ EditAlbFm.private_policy }}
+  </div>
+      <br>
+      <!--      Завантажити файли: {{ EditAlbFm.images }}-->
+      Завантажити файли: 
+      <input type="file" multiple="True" name="images" accept="image/*"> 
+      <br>
+      <button class="btn btn-success" type="submit">Зберегти</button>
+      <a class="btn btn-danger" href="{% url 'album_delete' al_slug=album.slug %}" role="button">Видалити альбом</a>
+                  
+    <hr>
+    {% for image in images %}
+      <div class="img_alb_edit_block">
+        <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" class="img_alb_edit"></a>
+        <a class="btn btn-warning" href="{% url 'delete_image' slug=image.slug %}" role="button">Видалити</a>
+<!--
+        <select class="form-control">
+          {% for us_alb in user_albums %}
+          <option>{{ us_alb.name }}</option>
+        {% endfor %}
+        </select>
+-->
+      </div>
+      <hr>
+    {% endfor %}
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock body %}

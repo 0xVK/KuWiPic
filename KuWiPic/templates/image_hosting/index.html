@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic :){% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+.fileform { 
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 32px;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 230px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+ 
+.fileform .selectbutton { 
+    background-color: #A2A3A3;
+    border: 1px solid #939494;
+    border-radius: 2px;
+    color: #FFFFFF;
+    float: right;
+    font-size: 16px;
+    height: 25px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 2px 6px;
+    text-align: center;
+    vertical-align: middle;
+    width: 70px;
+}
+ 
+.fileform #upload{
+    position:absolute; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    -moz-opacity: 0; 
+    opacity: 0; 
+    font-size: 150px; 
+    height: 30px; 
+    z-index:20;
+    cursor: pointer;
+}
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
+          <a href="/"><img src="{% static 'img/kuwipic_main.png' %}"></a>
+			<form method="post" enctype="multipart/form-data" name="m_upload_form" onchange="document.forms['m_upload_form'].submit()">
+		      {% csrf_token %}
+		    <div class="fileform">
+              <div id="fileformlabel"></div>
+              <div class="selectbutton">Обзор</div>
+              <input id="upload" type="file" name="img" accept="image/*">
+            </div>
+			</form>
+
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+{% endblock body %}

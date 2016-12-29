@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic &mdash; вхід {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .singin_form{
+/*    text-align: center;*/
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: snow;
+  }
+</style>
+{% endblock head %}
+
+{% block body %}
+      
+  <form method="post" class="singin_form">
+    {% if form.errors %}
+    <div class="has-error">
+    {% endif %}
+    <div class="form-group">
+        <label for="input_login" class="control-label">Логін</label>
+        <input type="text" name="username" class="form-control" id="input_login" placeholder="Введіть логін">
+      </div>
+        <div class="form-group">
+          <label for="input_pass" class="control-label">Пароль</label>
+          <input type="password" name="password" class="form-control" id="input_pass" placeholder="Введіть пароль">
+        </div>
+        {% if form.errors %}
+        <div style="color:#a94442"><b>Шось пішло не так. Хник-хник :( </b></div><br>
+        {% endif %}
+        <input class="btn btn-primary" type="submit" value="Вхід">
+    </div>
+  {% csrf_token %}
+  </form>
+      
+{% endblock body %}

@@ -13,6 +13,8 @@ def upload_image(request):
 
     if request.method == 'POST':
 
+        if not request.FILES.get('img'):
+            return redirect('/')
         saved_img = save_image(request.FILES.get('img'))
         if saved_img:
             return redirect(saved_img)
@@ -42,21 +44,31 @@ def show_image(request, slug):
 
 def last_images(request):
 
-    ims = Image_model.objects.get_latest(to=15)
+    ims = []
+    c = 0
+
+    for i in Image_model.objects.all():
+        if not i.album or i.album.private_policy == 'Public':
+            ims.append(i)
+            c += 1
+        if c == 15:
+            break
 
     return render(request, 'image_hosting/last.html', {'images': ims})
 
 
 def about(request):
 
-    count_users = User.objects.all().count()
+    count_users = User.objects.all().count() - 1  # Anonim user
     count_albums = Album.objects.all().count()
     count_images = Image_model.objects.all().count()
+    count_comments = Comment.objects.all().count()
 
     data = {
         'count_users': count_users,
         'count_albums': count_albums,
         'count_images': count_images,
+        'count_comments': count_comments,
     }
 
     return render(request, 'image_hosting/about.html', data)
@@ -66,19 +78,6 @@ def save_image(img, alb=None):
 
     import imghdr
 
-    # try:
-    #     uploaded_img = img
-    #     uploaded_img_ext = uploaded_img.name.split('.')[1].lower()
-    #     valid_extensions = ['gif', 'png', 'jpg', 'jpeg', 'bmp']
-    #
-    #     if uploaded_img_ext not in valid_extensions:
-    #         return None
-    #
-    #     else:
-    #         random_slug = get_random_slug(Image_model)
-    #         im = Image_model(image=uploaded_img, slug=random_slug, album=alb)
-    #         im.save()
-    #         return im
 
     try:
         if imghdr.what(img):
@@ -112,9 +111,7 @@ def comment_image(request, slug):
 
     if request.method == 'POST':
         img = get_object_or_404(Image_model, slug=slug)
-        comment_text = request.POST.get('comment_text')
-        print(comment_text)
+        comment_text = request.POST.get('comment_text')[:500]
         Comment(text=comment_text, user=request.user, image=img).save()
-
         return redirect(img)
 

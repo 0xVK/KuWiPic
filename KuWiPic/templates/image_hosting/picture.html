@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic - {{ image.image.name }} {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .image_for_show{
+    max-height: 750px;
+    max-width: 980px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .img_show{
+    text-align: center;
+    background: #F5F5F5;
+  }
+  .img_desc{
+    margin-top: 30px;
+    margin-left: 80px;
+    font-size: 15px;
+  }
+  .comments_block{
+    margin-top: 40px;
+    margin-left: 80px;
+  }
+  .user_comment{
+    word-wrap: break-word;
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+    <div class="img_show">
+      <img src="{{ image.image.url }}" class="image_for_show">
+    </div>
+    
+    <div class="img_desc">
+      <b>Назва:</b> {{ image.image.name }} <br>
+      {% if image.album %}
+      <b>Альбом:</b> <a href="{% url 'album_show' al_slug=image.album.slug %}">{{ image.album.name }} <br></a>
+      {% endif %}
+      <b>Дата завантаження:</b> {{ image.upload_date }} <br>
+      <b>Переглядів:</b> {{ image.views }} <br>
+      <b>Розмір:</b> {{ image.image.width }}x{{ image.image.height }}px <br>
+      <b><a href="{{ image.image.url }}" target="_blank">Відкрити оригінал ({{ img_size }} кб.)</a></b>
+      <hr>
+    </div>
+    
+    <div class="comments_block">
+      <h4><i>Коментарії:</i></h4>
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'comment_image' slug=image.slug  %}">
+            {% csrf_token %}
+            <input type="text" class="form-control" name="comment_text" maxlength="500" placeholder="Введіть текст" style="width:90%; float:left; margin-right: 15px;">
+            <button type="submit" class="btn btn-info">Даваа!</button>
+            </form>
+          {% endif %}
+            <hr>
+            {% if comments %}
+                {% for comm in comments %}
+                <div class="user_comment">
+                <a href="{% url 'profile' username=comm.user %}"><i><b>{{ comm.user }}</b></i></a>
+                  <b><i>({{ comm.date }}):</i></b><br><br>
+                <div style="padding-left:20px;">{{ comm.text }}</div>
+                <hr>
+                </div>
+                {% endfor %}
+            {% else %}
+                <h4>Це зображення поки ніхто не коментував</h4><hr>
+            {% endif %}
+    </div>
+{% endblock body %}

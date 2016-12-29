@@ -16,13 +16,8 @@ class FilterSortingInProfileForm(forms.Form):
         super(FilterSortingInProfileForm, self).__init__(*args, **kwargs)
         chs = [(al.id, al.name) for al in Album.objects.filter(owner=usr)]
         chs = [('', 'Всі')] + chs
-        self.fields['filter_albums'] = forms.ChoiceField(choices=chs, required=False)
-
-
-class AddImagesToAlbumForm(forms.Form):
-
-    images = forms.ImageField()
-    to_album = forms.ChoiceField()
+        self.fields['filter_albums'] = forms.ChoiceField(choices=chs, required=False,
+                                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
 
 class CreateAlbumForm(forms.ModelForm):
@@ -36,7 +31,8 @@ class CreateAlbumForm(forms.ModelForm):
         (UNLISTED, 'Unlisted'))
 
     name = forms.CharField(max_length=25, label='Ім`я')
-    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип')
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип',
+                                       widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Album
@@ -52,8 +48,10 @@ class EditAlbumForm(forms.ModelForm):
         (PUBLIC, 'Public'),
         (PRIVATE, 'Private'),
         (UNLISTED, 'Unlisted'))
-    name = forms.CharField(max_length=25, label='Ім`я', required=False)
-    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип')
+    name = forms.CharField(max_length=25, label='Ім`я', required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип',
+                                       widget=forms.Select(attrs={'class': 'form-control'}))
     images = forms.ImageField(required=False)
 
     class Meta:
@@ -92,7 +90,7 @@ class SignUpForm(forms.ModelForm):
 
 
 def forbidden_usernames_validator(value):
-    forbidden_usernames = ['admin', 'settings', 'about', 'help']
+    forbidden_usernames = ['admin', ]
 
     if value.lower() in forbidden_usernames:
         raise ValidationError(u'Це зарезервоване слово')

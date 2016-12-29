@@ -1,0 +1,62 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+div.container > div.content > div.filter-panel > div.images_count > p{
+    color: gray;
+    font-size: 16px;
+}
+
+div.container > div.content > div.filter-panel > form select#id_filter_albums.form-control{
+    width: 10%;
+}
+
+div.container > div.content > div.filter-panel {
+    margin-bottom: 25px;
+}
+
+div.container > div.content > div.row > div.col-md-3 > div.main_menu > button.btn.btn-primary {
+    margin-bottom: 40px;
+}
+
+div.container > div.content > div.row > div.col-md-9 > div.row > div.col-md-4{
+    margin-bottom: 35px;
+}
+
+
+header#header > nav.navbar.navbar-default > div.container > div.navbar-header > a.navbar-brand > img{
+    margin-top: -17px;
+    margin-right: 0px;
+    width: auto;
+    height: 58px;
+}
+
+header#header > nav.navbar.navbar-default{
+    min-height: 59px;
+}
+
+.info_block{
+  margin-top: 20px;
+  margin-bottom: 25px;
+  margin-right: 7px;;
+  text-align: right;
+  font-style: italic;
+}
+
+.info_block > .info_login{
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.about_block{
+  margin-top: 50px;
+}
+.stats{
+  margin-top: 30px;
+  font-size: 16px;
+}
+.kwp-text{
+  margin-top: 15px;
+  font-family: 'Handlee', cursive;
+  font-size: 30px;
+}

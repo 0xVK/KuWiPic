@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} KuWiPic &mdash; {{ user.username }} {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+
+<style>
+  .profile_grid_images{
+    max-height: 160px;
+    max-width: 243px;
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+        <div class="filter-panel">
+          <div class="images_count">
+            <p>{{ images_count }} images</p>
+          </div>
+          <form method="get" name="filter_form" onchange="document.forms['filter_form'].submit()">
+            {{ FilterSortForm.filter_albums }}
+          </form>
+        </div> <!-- filter panel -->
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                  {% if images %}
+                    {% for image in images %}
+                    <div class="col-md-4">
+                        <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" class="profile_grid_images"></a>
+                    </div>
+                    {% endfor %}
+
+                {% else %}
+                    <h2 style="text-align: center"> Зображень немає :(</h2>
+                {% endif %}
+
+
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="main_menu">
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                      Створити альбом
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Створити альбом</h4>
+                          </div>
+                          
+                          <div class="modal-body">
+                            <form class="form-horizontal" method="post" action="/a/create_alb/">
+                              {% csrf_token %}
+                                <div class="form-group">
+                                  <label for="alb_name" class="col-sm-2 control-label">Назва</label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="alb_name" name="name">
+                                  </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="alb_type" class="col-sm-2 control-label">Тип</label>
+                                    <div class="col-sm-10">
+                                      {{ CreateAlbmFm.private_policy }}
+                                    </div>
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Відміна</button>
+                            <button type="submit" class="btn btn-primary">Ок </button>
+                          </div>
+                        </div>
+                          </form>
+                      </div>
+                    </div>
+                    <div class="list-group">
+                         <a href="#" class="list-group-item active">
+                           Мої альбоми </a>
+                             {% if albums %}
+                                {% for album in albums %}
+                                    <a href="{% url 'album_show' al_slug=album.slug %}" class="list-group-item">
+                                    <span class="badge">{{ album.images_in_album.count }}</span>
+                                    {{ album.name }}
+                                    </a>
+                                {% endfor %}
+                                {% else %}
+                                <a href="#" class="list-group-item">
+                                    Альбомів немає
+                                </a>
+                              {% endif %}
+
+
+                      </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock body %}
