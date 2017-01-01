@@ -78,7 +78,6 @@ def save_image(img, alb=None):
 
     import imghdr
 
-
     try:
         if imghdr.what(img):
             random_slug = get_random_slug(Image_model)

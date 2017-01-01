@@ -189,10 +189,11 @@ def alb_edit(request, al_slug):
                     al.name = edit_alb_fm.cleaned_data['name']
                 if edit_alb_fm.cleaned_data['private_policy']:
                     al.private_policy = edit_alb_fm.cleaned_data['private_policy']
-                if edit_alb_fm.cleaned_data['images']:
-                    im = edit_alb_fm.cleaned_data['images']
-                    save_image(im, al)
-
+                if request.FILES['images']:
+                    if len(request.FILES.getlist('images')) > 30:
+                        return HttpResponseBadRequest('To many uploaded images. (Max - 30)')
+                    for x in request.FILES.getlist('images'):
+                        save_image(x, al)
                 al.save()
                 return redirect(al)
             else:
