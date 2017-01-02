@@ -84,7 +84,11 @@ class Image(models.Model):
 
     def delete(self, using=None, keep_parents=False):
 
-        os.remove(self.image.path)
+        try:
+            os.remove(self.image.path)
+
+        except Exception as ex:
+            print(ex)
 
         super(Image, self).delete()
 
