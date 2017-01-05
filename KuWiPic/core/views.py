@@ -12,7 +12,8 @@ from image_hosting.models import Album, Image
 from image_hosting.views import save_image
 from image_hosting.views import get_random_slug
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
+from django.core.exceptions import ValidationError
 
 class SignIn(FormView):
 
@@ -49,6 +50,30 @@ def sign_up(request):
 
         else:
             return render(request, 'core/signup.html', {'form': sign_up_fm})
+
+
+def validate_username(request):
+
+    username = request.GET.get('username')
+    sign_up_fm = SignUpForm(request.POST)
+    data = {}
+
+    try:
+        for validator in sign_up_fm.fields['username'].validators:
+            validator(username)
+
+    except ValidationError as e:
+        data['info'] = e.message
+
+    if data.get('info'):
+        is_okey = False
+    else:
+        is_okey = True
+        data['info'] = 'Логін вільний'
+
+    data['is_okey'] = is_okey
+
+    return JsonResponse(data)
 
 
 @login_required()
