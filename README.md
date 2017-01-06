@@ -32,4 +32,4 @@ The KuWiPic allows to create albums with different privacy types:
 
 ## Demo
 
-Try KuWiPic now at http://koocherov.pythonanywhere.com/
+Try KuWiPic now at http://kuwipic.pythonanywhere.com/
