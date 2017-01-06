@@ -1,0 +1,8 @@
+{% for comm in comments %}
+  <div class="user_comment">
+    <a href="{% url 'profile' username=comm.user %}"><i><b>{{ comm.user }}</b></i></a>
+    <b><i>({{ comm.date }}):</i></b><br><br>
+    <div style="padding-left:20px;">{{ comm.text }}</div>
+    <hr>
+  </div>
+{% endfor %}

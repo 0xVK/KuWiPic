@@ -30,8 +30,25 @@
     word-wrap: break-word;
   }
 </style>
-
 {% endblock head %}
+
+{% block javascript %}
+  <script>
+    function load_comments(){
+      $.ajax({  
+              url: "/i/{{ image.slug }}/getcomments/",  
+              cache: false,  
+              success: function(html){  
+                $("#comments").html(html);  
+                }  
+            });        
+    }
+    $(document).ready(function(){
+      load_comments();
+      setInterval(load_comments, 5000);
+    });
+  </script>
+{% endblock javascript %}
 
 {% block body %}
 
@@ -62,14 +79,9 @@
           {% endif %}
             <hr>
             {% if comments %}
-                {% for comm in comments %}
-                <div class="user_comment">
-                <a href="{% url 'profile' username=comm.user %}"><i><b>{{ comm.user }}</b></i></a>
-                  <b><i>({{ comm.date }}):</i></b><br><br>
-                <div style="padding-left:20px;">{{ comm.text }}</div>
-                <hr>
-                </div>
-                {% endfor %}
+               <div id="comments">
+
+               </div>
             {% else %}
                 <h4>Це зображення поки ніхто не коментував</h4><hr>
             {% endif %}

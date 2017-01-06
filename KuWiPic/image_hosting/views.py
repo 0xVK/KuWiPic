@@ -28,7 +28,6 @@ def upload_image(request):
 def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
-
     if (img.album and img.album.private_policy == 'Private') and not request.user.has_perm('image_hosting.album_owner', img.album):
         return HttpResponseForbidden('Http Response Forbidden for show')
 
@@ -36,10 +35,22 @@ def show_image(request, slug):
         img.views += 1
         img.save()
         img_size = round(img.image.size / 1024, 1)
-        comments = Comment.objects.filter(image=img)
+        comments = Comment.objects.filter(image=img)[:15]
 
         data = {'image': img, 'img_size': img_size, 'comments': comments}
         return render(request, 'image_hosting/picture.html', context=data)
+
+
+def show_image_comments(request, slug):
+
+    img = get_object_or_404(Image_model, slug=slug)
+    if (img.album and img.album.private_policy == 'Private') and not request.user.has_perm('image_hosting.album_owner', img.album):
+        return HttpResponseForbidden('Http Response Forbidden for show comments')
+
+    else:
+        comments = Comment.objects.filter(image=img)[:15]
+
+        return render(request, 'image_hosting/picture_comments.html', {'comments': comments})
 
 
 def last_images(request):
