@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} KuWiPic &mdash; {{ album.name }} {% endblock %}
 
@@ -37,7 +38,7 @@
           {{ album.name }}
         </div>
         {% if is_alb_owner %}
-          <h3><a href="{% url 'album_edit' al_slug=album.slug %}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> редагувати</button></a></h3>
+          <h3><a href="{% url 'album_edit' al_slug=album.slug %}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {% trans 'редактировать' %}</button></a></h3>
           <hr>
         {% endif %}
           {% if images %}
@@ -47,7 +48,7 @@
             </div>
           {% endfor %}
           {% else %}
-          <h3>Тут поки пусто...</h3>
+          <h3>{% trans 'Тут пока что пусто..' %}</h3>
           {% endif %}
         </div>
         <div class="col-md-3">
@@ -59,15 +60,15 @@
             <!-- /input-group -->
           <div class="panel panel-default" style="margin-top:30px;">
             <div class="panel-heading">
-              <h3 class="panel-title">Інформація</h3>
+              <h3 class="panel-title">{% trans 'Информация' %}</h3>
             </div>
             <div class="panel-body">
-              <p><b>Назва:</b> {{ album.name }}</p>
-              <p><b>Власник:</b><a href="{% url 'profile' username=album.owner.username %}"> {{ album.owner }}</a></p>
-              <p><b>Тип:</b> {{ album.private_policy }}</p>
-              <p><b>Дата створення:</b> {{ album.create_date }}</p>
+              <p><b>{% trans 'Название:' %}</b> {{ album.name }}</p>
+              <p><b>{% trans 'Создал:' %}</b><a href="{% url 'profile' username=album.owner.username %}"> {{ album.owner }}</a></p>
+              <p><b>{% trans 'Тип:' %}</b> {{ album.private_policy }}</p>
+              <p><b>{% trans 'Дата создания:' %}</b> {{ album.create_date }}</p>
               {% if edit_date %}
-              <p><b>Дата редагування:</b> {{ album.edit_date }}</p>
+              <p><b>{% trans 'Дата редактирования:' %}</b> {{ album.edit_date }}</p>
               {% endif %}
             </div>
           </div>

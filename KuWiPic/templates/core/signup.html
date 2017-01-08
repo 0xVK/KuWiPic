@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} KuWiPic &mdash; реєстрація {% endblock %}
+{% block title %} KuWiPic &mdash; {% trans 'регистрация' %} {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -46,29 +47,29 @@
   <form method="post" class="singin_form">
    
     <div class="form-group" id="username_block">
-      <label for="input_login" class="control-label">Логін</label>
-      <input type="text" name="username" class="form-control" id="input_login" placeholder="Введіть логін">
+      <label for="input_login" class="control-label">{% trans 'Логин' %}</label>
+      <input type="text" name="username" class="form-control" id="input_login" placeholder="{% trans 'Введите логин' %}">
       <div id="info_login">
       </div>
     </div>
     
     <div class="form-group password_block">
-      <label for="input_pass" class="control-label">Пароль</label>
-      <input type="password" name="password" class="form-control" id="input_pass" placeholder="Введіть пароль">
+      <label for="input_pass" class="control-label">{% trans 'Пароль' %}</label>
+      <input type="password" name="password" class="form-control" id="input_pass" placeholder="{% trans 'Введите пароль' %}">
     </div>
     
     <div class="form-group password_block">
-      <label for="input_pass2" class="control-label">Пароль ще раз</label>
+      <label for="input_pass2" class="control-label">{% trans 'Пароль еще раз' %}</label>
       {% if form.password.errors %}
       {{ form.password.errors }}
       {% endif %}
-      <input type="password" name="confirm_password" class="form-control" id="input_pass2" placeholder="Введіть пароль">
+      <input type="password" name="confirm_password" class="form-control" id="input_pass2" placeholder="{% trans 'Введите пароль' %}">
       <div id="info_pass">
       </div>
     </div>
     
   {% csrf_token %}
-  <input class="btn btn-primary" id="submit_btn" type="submit" value="Реєстрація">
+  <input class="btn btn-primary" id="submit_btn" type="submit" value="{% trans 'Регистрация' %}">
   </form>
       
 {% endblock body %}

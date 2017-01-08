@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} KuWiPic :){% endblock %}
 
@@ -66,7 +67,7 @@
 		      {% csrf_token %}
 		    <div class="fileform">
               <div id="fileformlabel"></div>
-              <div class="selectbutton">Обзор</div>
+              <div class="selectbutton">{% trans 'Обзор' %}</div>
               <input id="upload" type="file" name="img" accept="image/*">
             </div>
 			</form>

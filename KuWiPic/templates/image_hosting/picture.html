@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} KuWiPic - {{ image.image.name }} {% endblock %}
 
@@ -57,24 +58,24 @@
     </div>
     
     <div class="img_desc">
-      <b>Назва:</b> {{ image.image.name }} <br>
+      <b>{% trans 'Название:' %}</b> {{ image.image.name }} <br>
       {% if image.album %}
-      <b>Альбом:</b> <a href="{% url 'album_show' al_slug=image.album.slug %}">{{ image.album.name }} <br></a>
+      <b>{% trans 'Альбом:' %}</b> <a href="{% url 'album_show' al_slug=image.album.slug %}">{{ image.album.name }} <br></a>
       {% endif %}
-      <b>Дата завантаження:</b> {{ image.upload_date }} <br>
-      <b>Переглядів:</b> {{ image.views }} <br>
-      <b>Розмір:</b> {{ image.image.width }}x{{ image.image.height }}px <br>
-      <b><a href="{{ image.image.url }}" target="_blank">Відкрити оригінал ({{ img_size }} кб.)</a></b>
+      <b>{% trans 'Дата загрузки:' %}</b> {{ image.upload_date }} <br>
+      <b>{% trans 'Просмотров:' %}</b> {{ image.views }} <br>
+      <b>{% trans 'Размер:' %}</b> {{ image.image.width }}x{{ image.image.height }}px <br>
+      <b><a href="{{ image.image.url }}" target="_blank">{% trans 'Открыть оригинал' %} ({{ img_size }} кб.)</a></b>
       <hr>
     </div>
     
     <div class="comments_block">
-      <h4><i>Коментарії:</i></h4>
+      <h4><i>{% trans 'Коментарии:' %}</i></h4>
         {% if user.is_authenticated %}
           <form method="post" action="{% url 'comment_image' slug=image.slug  %}">
             {% csrf_token %}
-            <input type="text" class="form-control" name="comment_text" maxlength="500" placeholder="Введіть текст" style="width:90%; float:left; margin-right: 15px;">
-            <button type="submit" class="btn btn-info">Даваа!</button>
+            <input type="text" class="form-control" name="comment_text" maxlength="500" placeholder="{% trans 'Введите текст' %}" style="width:90%; float:left; margin-right: 15px;">
+            <button type="submit" class="btn btn-info">{% trans 'Ок' %}</button>
             </form>
           {% endif %}
             <hr>
@@ -83,7 +84,7 @@
 
                </div>
             {% else %}
-                <h4>Це зображення поки ніхто не коментував</h4><hr>
+                <h4>{% trans 'Это изображение пока никто не комментировал' %}</h4><hr>
             {% endif %}
     </div>
 {% endblock body %}

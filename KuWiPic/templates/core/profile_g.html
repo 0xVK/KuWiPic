@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} KuWiPic &mdash; {{ this_profile_user.username }} {% endblock %}
 
@@ -18,7 +19,7 @@
 {% block body %}
         <div class="filter-panel">
           <div class="images_count">
-            <p>{{ images_for_guest_count }} images</p>
+            <p>{{ images_for_guest_count }} {% trans 'изображений' %}</p>
           </div>
         </div> <!-- filter panel -->
 
@@ -33,7 +34,7 @@
                     {% endfor %}
 
                 {% else %}
-                    <h2 style="text-align: center"> Зображень немає :(</h2>
+                    <h2 style="text-align: center"> {% trans 'Картинок пока что нет..' %}</h2>
                 {% endif %}
 
 
@@ -44,11 +45,11 @@
                 <div class="main_menu">
                   <div class="info_block">
                   <div class="info_login">{{ this_profile_user.username }}</div>
-                  Був в мережі <br>
+                  {% trans 'Был в сети' %} <br>
                   {{ this_profile_user.last_login }}
                   </div>
                     <div class="list-group">
-                         <a href="#" class="list-group-item active">Альбоми</a>
+                         <a href="#" class="list-group-item active">{% trans 'Альбомы' %}</a>
                              {% if all_albms_for_guest %}
                                 {% for album in all_albms_for_guest %}
                                     <a href="{% url 'album_show' al_slug=album.slug %}" class="list-group-item">
@@ -58,7 +59,7 @@
                                 {% endfor %}
                               {% else %}
                                 <a href="#" class="list-group-item">
-                                    Альбомів немає
+                                    {% trans 'Альбомов нет' %}
                                 </a>
                               {% endif %}
                         </div>

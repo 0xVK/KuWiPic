@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} KuWiPic &mdash; {{ album.name }} edit{% endblock %}
+{% block title %} KuWiPic &mdash; {{ album.name }} {% trans 'изменить' %}{% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -45,7 +46,7 @@
 {% block body %}
   <div class="edit_imgs_block">
   <div class="alb_title">
-    {{ album.name }} (редагування)
+    {{ album.name }} {% trans '(редактирование)' %}
   </div>
   <form method="post" enctype="multipart/form-data" class="iform">
    <div class="album_info_edit">
@@ -56,17 +57,17 @@
   </div>
       <br>
       <!--      Завантажити файли: {{ EditAlbFm.images }}-->
-      Завантажити файли: 
+      {% trans 'Загрузить файлы' %}
       <input type="file" multiple="True" name="images" accept="image/*"> 
       <br>
-      <button class="btn btn-success" type="submit">Зберегти</button>
-      <a class="btn btn-danger" href="{% url 'album_delete' al_slug=album.slug %}" role="button">Видалити альбом</a>
+      <button class="btn btn-success" type="submit">{% trans 'Сохранить' %}</button>
+      <a class="btn btn-danger" href="{% url 'album_delete' al_slug=album.slug %}" role="button">{% trans 'Удалить альбом' %}</a>
                   
     <hr>
     {% for image in images %}
       <div class="img_alb_edit_block">
         <a href="{% url 'show_image' slug=image.slug %}"><img src="{{ image.image.url }}" class="img_alb_edit"></a>
-        <a class="btn btn-warning" href="{% url 'delete_image' slug=image.slug %}" role="button">Видалити</a>
+        <a class="btn btn-warning" href="{% url 'delete_image' slug=image.slug %}" role="button">{% trans 'Удалить' %}</a>
 <!--
         <select class="form-control">
           {% for us_alb in user_albums %}

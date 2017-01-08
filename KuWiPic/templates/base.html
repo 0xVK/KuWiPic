@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -43,13 +44,23 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/last">Останні завантаження</a></li>
-            <li><a href="/users">Користувачі</a></li>
-            <li><a href="/about">Про сайт</a></li>
+            <li><a href="/last">{% trans 'Последние загрузки' %} </a></li>
+            <li><a href="/users">{% trans 'Пользователи' %}</a></li>
+            <li><a href="/about">{% trans 'О сайте' %}</a></li>
             <li>
               <a href="https://github.com/0xVK/KuWiPic" target="_blank">Git Hub
               </a>
             </li>
+<!--
+            <li><a href="#"><span class="glyphicon glyphicon-globe"></span>
+              </a>
+                <ul id="lang_menu" >
+	              <li><a href="/lang/en">En</a></li>
+	              <li><a href="/lang/ru">Ru</a></li>
+	              <li><a href="/lang/uk">Uk</a></li>
+	            </ul>
+-->
+	         </li>
 
           </ul>
 
@@ -59,30 +70,33 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon glyphicon-home" aria-hidden="true" style="font-size: 16px;"></span> {{ user.username }} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{% url 'profile' username=user.username %}">
-                    <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> Мій профіль</a>
+                    <span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span> {% trans 'Мой профиль' %}</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li><a href="#">
-                    <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span> Налаштування</a>
+                    <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span> {% trans 'Настройки' %}</a>
                   </li>
                   <li><a href="#">
-                    <span class="glyphicon glyphicon glyphicon-book" aria-hidden="true"></span> Допомога</a>
+                    <span class="glyphicon glyphicon glyphicon-book" aria-hidden="true"></span> {% trans 'Помощь' %}</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li><a href="{% url 'logout' %}">
                     <span class="glyphicon glyphicon glyphicon-share" aria-hidden="true"></span>
-                    Вийти</a>
+                    {% trans 'Выйти' %}</a>
                   </li>
                 </ul>
               {% else %}
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon glyphicon-home" aria-hidden="true" style="font-size: 16px;"></span> Профіль<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon glyphicon-home" aria-hidden="true" style="font-size: 16px;"></span> {% trans 'Профиль' %}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="{% url 'sign_in' %}"><span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true" style="font-size: 16px;"></span>  Вхід</a></li>
-                  <li><a href="{% url 'reg' %}"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true" style="font-size: 16px;"></span>   Реєстрація</a></li>
+                  <li><a href="{% url 'sign_in' %}"><span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true" style="font-size: 16px;"></span>  {% trans 'Вход' %}</a></li>
+                  <li><a href="{% url 'reg' %}"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true" style="font-size: 16px;"></span>  {% trans 'Регистрация' %}</a></li>
                 </ul>                  
               {% endif %}
+
             </li>
+            
           </ul>
+          
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>

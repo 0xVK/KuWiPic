@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} KuWiPic &mdash; вхід {% endblock %}
+{% block title %} KuWiPic &mdash; {% trans 'вход' %} {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -25,17 +26,17 @@
     <div class="has-error">
     {% endif %}
     <div class="form-group">
-        <label for="input_login" class="control-label">Логін</label>
-        <input type="text" name="username" class="form-control" id="input_login" placeholder="Введіть логін">
+        <label for="input_login" class="control-label">{% trans 'Логин' %}</label>
+        <input type="text" name="username" class="form-control" id="input_login" placeholder="{% trans 'Введите логин' %}">
       </div>
         <div class="form-group">
-          <label for="input_pass" class="control-label">Пароль</label>
-          <input type="password" name="password" class="form-control" id="input_pass" placeholder="Введіть пароль">
+          <label for="input_pass" class="control-label">{% trans 'Пароль' %}</label>
+          <input type="password" name="password" class="form-control" id="input_pass" placeholder="{% trans 'Введите пароль' %}">
         </div>
         {% if form.errors %}
-        <div style="color:#a94442"><b>Шось пішло не так. Хник-хник :( </b></div><br>
+        <div style="color:#a94442"><b>{% trans 'Что-то пошло не так. Хнык..' %} </b></div><br>
         {% endif %}
-        <input class="btn btn-primary" type="submit" value="Вхід">
+        <input class="btn btn-primary" type="submit" value="{% trans 'Вход' %}">
     </div>
   {% csrf_token %}
   </form>

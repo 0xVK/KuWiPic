@@ -4,7 +4,9 @@ from django import forms
 from image_hosting.models import Album
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
 import re
+
 
 class FilterSortingInProfileForm(forms.Form):
 
@@ -15,7 +17,7 @@ class FilterSortingInProfileForm(forms.Form):
 
         super(FilterSortingInProfileForm, self).__init__(*args, **kwargs)
         chs = [(al.id, al.name) for al in Album.objects.filter(owner=usr)]
-        chs = [('', 'Всі')] + chs
+        chs = [('', _('Все'))] + chs
         self.fields['filter_albums'] = forms.ChoiceField(choices=chs, required=False,
                                                          widget=forms.Select(attrs={'class': 'form-control'}))
 
@@ -30,8 +32,8 @@ class CreateAlbumForm(forms.ModelForm):
         (PRIVATE, 'Private'),
         (UNLISTED, 'Unlisted'))
 
-    name = forms.CharField(max_length=25, label='Ім`я')
-    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип',
+    name = forms.CharField(max_length=25, label=_('Название'))
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label=_('Тип'),
                                        widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
@@ -48,9 +50,9 @@ class EditAlbumForm(forms.ModelForm):
         (PUBLIC, 'Public'),
         (PRIVATE, 'Private'),
         (UNLISTED, 'Unlisted'))
-    name = forms.CharField(max_length=25, label='Ім`я', required=False,
+    name = forms.CharField(max_length=25, label=_('Имя'), required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label='Тип',
+    private_policy = forms.ChoiceField(choices=PRIVACY_TYPES, label=_('Тип'),
                                        widget=forms.Select(attrs={'class': 'form-control'}))
     images = forms.ImageField(required=False)
 
@@ -81,7 +83,7 @@ class SignUpForm(forms.ModelForm):
         confirm_password = self.cleaned_data.get('confirm_password')
         if password != confirm_password:
             self._errors['password'] = self.error_class(
-                ['Паролі не співпадають'])
+                [_('Пароли не совпадают!')])
         return self.cleaned_data
 
 
@@ -90,12 +92,12 @@ def forbidden_usernames_validator(value):
     forbidden_usernames = ['admin', ]
 
     if value.lower() in forbidden_usernames:
-        raise ValidationError(u'Це зарезервоване слово')
+        raise ValidationError(_('Это зарезервированное слово'))
 
 
 def unique_username_ignore_case_validator(value):
     if User.objects.filter(username__iexact=value).exists():
-        raise ValidationError('Логін зайнятий')
+        raise ValidationError(_('Логин занят'))
 
 
 def correct_format_validator(value):
@@ -103,4 +105,4 @@ def correct_format_validator(value):
     username_validator_regexp = '^[a-zA-Z][a-zA-Z0-9-_]{3,20}$'
 
     if not re.match(username_validator_regexp, value):
-        raise ValidationError('Недопустимий формат')
+        raise ValidationError(_('Недопустимый формат'))

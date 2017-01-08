@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} KuWiPic &mdash; Список користувачів {% endblock %}
+{% block title %} KuWiPic &mdash; {% trans 'Последние загрузки' %} {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -20,7 +21,7 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 text-center">
-          <h3>Останні завантаження</h3><br>
+          <h3>{% trans 'Последние загрузки' %}</h3><br>
           <table class="table table-hover">
           {% if images %}
           {% for image in images %}
@@ -30,7 +31,7 @@
           {% endfor %}
           {% else %}
           <div style="margin-top:120px;">
-          <h4>Пустотаа...</h4>
+          <h4>{% trans 'Пока что тут пусто :(' %}</h4>
           </div>
           {% endif %}
           </table>

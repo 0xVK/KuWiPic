@@ -7,13 +7,16 @@ from django.views.generic import FormView
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib.auth.models import User
-from core.forms import FilterSortingInProfileForm, CreateAlbumForm, EditAlbumForm, SignUpForm
+from .forms import FilterSortingInProfileForm, CreateAlbumForm, EditAlbumForm, SignUpForm
 from image_hosting.models import Album, Image
 from image_hosting.views import save_image
 from image_hosting.views import get_random_slug
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+from django.utils import translation
+from django.conf import settings
 
 class SignIn(FormView):
 
@@ -69,7 +72,7 @@ def validate_username(request):
         is_okey = False
     else:
         is_okey = True
-        data['info'] = 'Логін вільний'
+        data['info'] = _('Логин доступный')
 
     data['is_okey'] = is_okey
 
@@ -141,6 +144,8 @@ def profile(request, username):
 @login_required()
 def create_alb(request):
 
+    print(request.method)
+
     if request.method == 'POST':
         CreateAlbmFm = CreateAlbumForm(request.POST)
 
@@ -156,10 +161,10 @@ def create_alb(request):
 
             return redirect(al)
         else:
-            return HttpResponseBadRequest('Errors:' + str(CreateAlbmFm.errors))
+            return HttpResponseBadRequest(_('Ошибки:') + str(CreateAlbmFm.errors))
 
     else:
-        return HttpResponseBadRequest('invalid method(GET)')
+        return HttpResponseBadRequest(_('Неправильный метод (GET)'))
 
 
 def alb_show(request, al_slug):
@@ -169,7 +174,7 @@ def alb_show(request, al_slug):
     is_alb_owner = al.owner == request.user
 
     if al.private_policy == 'Private' and not request.user.has_perm('image_hosting.album_owner', al):
-        return HttpResponseForbidden('Http Response Forbidden for alb show')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для просмотра этого альбома!'))
 
     else:
 
@@ -192,7 +197,7 @@ def alb_edit(request, al_slug):
     user_albums = Album.objects.filter(owner=request.user)
 
     if not request.user.has_perm('image_hosting.album_owner', al):
-        return HttpResponseForbidden('Http Response Forbidden for edit')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для редактирования этого альбома!'))
 
     else:
         if request.method == 'GET':
@@ -233,7 +238,7 @@ def delete_photo(request, slug):
     im = get_object_or_404(Image, slug=slug)
 
     if not request.user.has_perm('image_hosting.album_owner', im.album):
-        return HttpResponseForbidden('Http Response Forbidden for delete photo')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для удаления этой картинки'))
     else:
         im.delete()
         return redirect('/a/{}/edit'.format(im.album.slug))
@@ -245,7 +250,7 @@ def delete_album(request, al_slug):
     al = get_object_or_404(Album, slug=al_slug)
 
     if not request.user.has_perm('image_hosting.album_owner', al):
-        return HttpResponseForbidden('Http Response Forbidden for delete album')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для удаления этого альбома'))
     else:
         al.delete()
         return redirect('/u/{}'.format(request.user.username))
@@ -253,6 +258,22 @@ def delete_album(request, al_slug):
 
 def show_users(request):
 
-    users = User.objects.all()[1:]
+    users = User.objects.all()[1:50]
 
     return render(request, 'core/users.html', {'users': users})
+
+
+def select_lang(request, code):
+
+    go_next = request.META.get('HTTP_REFERER', '/')
+    response = HttpResponseRedirect(go_next)
+
+    if code and translation.check_for_language(code):
+        if hasattr(request, 'session'):
+            request.session[translation.LANGUAGE_SESSION_KEY] = code
+            # request.session['django_language'] = code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, code)
+        translation.activate(code)
+
+    return response

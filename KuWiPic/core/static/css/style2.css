@@ -60,3 +60,12 @@ header#header > nav.navbar.navbar-default{
   font-family: 'Handlee', cursive;
   font-size: 30px;
 }
+
+#lang_menu{
+  padding-left: 14px;
+}
+
+#lang_menu > li{
+  list-style: none;
+  display: inline;
+}

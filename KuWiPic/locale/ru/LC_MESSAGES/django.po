@@ -1,0 +1,353 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-07 10:48+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: core/forms.py:20
+msgid "Все"
+msgstr ""
+
+#: core/forms.py:35 image_hosting/models.py:16 templates/core/profile.html:69
+msgid "Название"
+msgstr ""
+
+#: core/forms.py:36 core/forms.py:55 templates/core/profile.html:75
+msgid "Тип"
+msgstr ""
+
+#: core/forms.py:53
+msgid "Имя"
+msgstr ""
+
+#: core/forms.py:86
+msgid "Пароли не совпадают!"
+msgstr ""
+
+#: core/forms.py:95
+msgid "Это зарезервированное слово"
+msgstr ""
+
+#: core/forms.py:100
+msgid "Логин занят"
+msgstr ""
+
+#: core/forms.py:108
+msgid "Недопустимый формат"
+msgstr ""
+
+#: core/views.py:74
+msgid "Логин доступный"
+msgstr ""
+
+#: core/views.py:163
+msgid "Ошибки:"
+msgstr ""
+
+#: core/views.py:166
+msgid "Неправильный метод (GET)"
+msgstr ""
+
+#: core/views.py:176
+msgid "У Вас недостаточно прав для просмотра этого альбома!"
+msgstr ""
+
+#: core/views.py:199
+msgid "У Вас недостаточно прав для редактирования этого альбома!"
+msgstr ""
+
+#: core/views.py:240
+msgid "У Вас недостаточно прав для удаления этой картинки"
+msgstr ""
+
+#: core/views.py:252
+msgid "У Вас недостаточно прав для удаления этого альбома"
+msgstr ""
+
+#: image_hosting/models.py:24
+msgid "Альбом"
+msgstr ""
+
+#: image_hosting/models.py:25
+msgid "Альбоми"
+msgstr ""
+
+#: image_hosting/models.py:60 image_hosting/models.py:61
+msgid "Изображения"
+msgstr ""
+
+#: image_hosting/views.py:23
+msgid "неверный тип файла"
+msgstr ""
+
+#: image_hosting/views.py:33
+msgid "У Вас недостаточно прав для просмотра этого изображения"
+msgstr ""
+
+#: image_hosting/views.py:49
+msgid ""
+"У Вас недостаточно прав для просмотра комментариев для этого изображения"
+msgstr ""
+
+#: image_hosting/views.py:105
+msgid "Ошибка сервера"
+msgstr ""
+
+#: templates/base.html:47 templates/image_hosting/last.html:5
+#: templates/image_hosting/last.html:24
+msgid "Последние загрузки"
+msgstr ""
+
+#: templates/base.html:48
+msgid "Пользователи"
+msgstr ""
+
+#: templates/base.html:49
+msgid "О сайте"
+msgstr ""
+
+#: templates/base.html:63
+msgid "Мой профиль"
+msgstr ""
+
+#: templates/base.html:67
+msgid "Настройки"
+msgstr ""
+
+#: templates/base.html:70
+msgid "Помощь"
+msgstr ""
+
+#: templates/base.html:75
+msgid "Выйти"
+msgstr ""
+
+#: templates/base.html:79
+msgid "Профиль"
+msgstr ""
+
+#: templates/base.html:81 templates/core/signin.html:39
+msgid "Вход"
+msgstr ""
+
+#: templates/base.html:82 templates/core/signup.html:72
+msgid "Регистрация"
+msgstr ""
+
+#: templates/core/album.html:41
+msgid "редактировать"
+msgstr ""
+
+#: templates/core/album.html:51
+msgid "Тут пока что пусто.."
+msgstr ""
+
+#: templates/core/album.html:63
+msgid "Информация"
+msgstr ""
+
+#: templates/core/album.html:66 templates/image_hosting/picture.html:61
+msgid "Название:"
+msgstr ""
+
+#: templates/core/album.html:67
+msgid "Создал:"
+msgstr ""
+
+#: templates/core/album.html:68
+msgid "Тип:"
+msgstr ""
+
+#: templates/core/album.html:69
+msgid "Дата создания:"
+msgstr ""
+
+#: templates/core/album.html:71
+msgid "Дата редактирования:"
+msgstr ""
+
+#: templates/core/album_edit.html:5
+msgid "изменить"
+msgstr ""
+
+#: templates/core/album_edit.html:49
+msgid "(редактирование)"
+msgstr ""
+
+#: templates/core/album_edit.html:60
+msgid "Загрузить файлы"
+msgstr ""
+
+#: templates/core/album_edit.html:63
+msgid "Сохранить"
+msgstr ""
+
+#: templates/core/album_edit.html:64
+msgid "Удалить альбом"
+msgstr ""
+
+#: templates/core/album_edit.html:70
+msgid "Удалить"
+msgstr ""
+
+#: templates/core/profile.html:22 templates/core/profile_g.html:22
+msgid "изображений"
+msgstr ""
+
+#: templates/core/profile.html:40
+msgid "Изображений нет"
+msgstr ""
+
+#: templates/core/profile.html:53 templates/core/profile.html:62
+msgid "Создать альбом"
+msgstr ""
+
+#: templates/core/profile.html:82
+msgid "Отмена"
+msgstr ""
+
+#: templates/core/profile.html:83 templates/image_hosting/picture.html:78
+msgid "Ок"
+msgstr ""
+
+#: templates/core/profile.html:91
+msgid "Мои альбомы"
+msgstr ""
+
+#: templates/core/profile.html:101 templates/core/profile_g.html:62
+msgid "Альбомов нет"
+msgstr ""
+
+#: templates/core/profile_g.html:37
+msgid "Картинок пока что нет.."
+msgstr ""
+
+#: templates/core/profile_g.html:48
+msgid "Был в сети"
+msgstr ""
+
+#: templates/core/profile_g.html:52
+msgid "Альбомы"
+msgstr ""
+
+#: templates/core/signin.html:5
+msgid "вход"
+msgstr ""
+
+#: templates/core/signin.html:29 templates/core/signup.html:50
+#: templates/core/users.html:19
+msgid "Логин"
+msgstr ""
+
+#: templates/core/signin.html:30 templates/core/signup.html:51
+msgid "Введите логин"
+msgstr ""
+
+#: templates/core/signin.html:33 templates/core/signup.html:57
+msgid "Пароль"
+msgstr ""
+
+#: templates/core/signin.html:34 templates/core/signup.html:58
+#: templates/core/signup.html:66
+msgid "Введите пароль"
+msgstr ""
+
+#: templates/core/signin.html:37
+msgid "Что-то пошло не так. Хнык.."
+msgstr ""
+
+#: templates/core/signup.html:5
+msgid "регистрация"
+msgstr ""
+
+#: templates/core/signup.html:62
+msgid "Пароль еще раз"
+msgstr ""
+
+#: templates/core/users.html:5 templates/core/users.html:16
+msgid "Список пользователей"
+msgstr ""
+
+#: templates/core/users.html:20
+msgid "Дата регистрации"
+msgstr ""
+
+#: templates/image_hosting/about.html:5
+msgid "О KuWiPic"
+msgstr ""
+
+#: templates/image_hosting/about.html:25
+msgid "Наверно лучший фотохостинг в радиусе 15 метров ;)"
+msgstr ""
+
+#: templates/image_hosting/about.html:27
+msgid "Пользователей зарегестрированно:"
+msgstr ""
+
+#: templates/image_hosting/about.html:28
+msgid "Альбомов создано:"
+msgstr ""
+
+#: templates/image_hosting/about.html:29
+msgid "Фотографий загружено:"
+msgstr ""
+
+#: templates/image_hosting/about.html:30
+msgid "Коментариев написано:"
+msgstr ""
+
+#: templates/image_hosting/index.html:70
+msgid "Обзор"
+msgstr ""
+
+#: templates/image_hosting/last.html:34
+msgid "Пока что тут пусто :("
+msgstr ""
+
+#: templates/image_hosting/picture.html:63
+msgid "Альбом:"
+msgstr ""
+
+#: templates/image_hosting/picture.html:65
+msgid "Дата загрузки:"
+msgstr ""
+
+#: templates/image_hosting/picture.html:66
+msgid "Просмотров:"
+msgstr ""
+
+#: templates/image_hosting/picture.html:67
+msgid "Размер:"
+msgstr ""
+
+#: templates/image_hosting/picture.html:68
+msgid "Открыть оригинал"
+msgstr ""
+
+#: templates/image_hosting/picture.html:73
+msgid "Коментарии:"
+msgstr ""
+
+#: templates/image_hosting/picture.html:77
+msgid "Введите текст"
+msgstr ""
+
+#: templates/image_hosting/picture.html:87
+msgid "Это изображение пока никто не комментировал"
+msgstr ""

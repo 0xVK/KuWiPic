@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} Про KuWiPic {% endblock %}
+{% block title %} {% trans 'О KuWiPic' %} {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -21,12 +22,12 @@
       <span style="color:darkturquoise">i</span>
       <span style="color:coral">C</span>         
     </p>
-    <p style="font-size: 26px;"><i> Мабуть найкращий хостинг картинок в радіусі 18 метрів ;) </i></p>
+    <p style="font-size: 26px;"><i> {% trans 'Наверно лучший фотохостинг в радиусе 15 метров ;)' %}</i></p>
     <div class="stats"> 
-    <p><b>Користувачів зареєстровано:</b> {{ count_users }}</p>
-    <p><b>Альбомів створено:</b> {{ count_albums }}</p>
-    <p><b>Фотографій завантажено:</b> {{ count_images }}</p>
-    <p><b>Коментаріїв написано:</b> {{ count_comments }}</p>
+    <p><b>{% trans 'Пользователей зарегестрированно:' %}</b> {{ count_users }}</p>
+    <p><b>{% trans 'Альбомов создано:' %}</b> {{ count_albums }}</p>
+    <p><b>{% trans 'Фотографий загружено:' %}</b> {{ count_images }}</p>
+    <p><b>{% trans 'Коментариев написано:' %}</b> {{ count_comments }}</p>
     </div>
   </div>
   

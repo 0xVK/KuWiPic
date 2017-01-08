@@ -5,6 +5,7 @@ from image_hosting.models import Image as Image_model, Album
 from .models import Comment
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.translation import ugettext as _
 import string
 import random
 
@@ -19,7 +20,7 @@ def upload_image(request):
         if saved_img:
             return redirect(saved_img)
         else:
-            return HttpResponse('image type error')
+            return HttpResponse(_('неверный тип файла'))
 
     else:
         return render(request, 'image_hosting/index.html')
@@ -29,7 +30,7 @@ def show_image(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
     if (img.album and img.album.private_policy == 'Private') and not request.user.has_perm('image_hosting.album_owner', img.album):
-        return HttpResponseForbidden('Http Response Forbidden for show')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для просмотра этого изображения'))
 
     else:
         img.views += 1
@@ -45,7 +46,7 @@ def show_image_comments(request, slug):
 
     img = get_object_or_404(Image_model, slug=slug)
     if (img.album and img.album.private_policy == 'Private') and not request.user.has_perm('image_hosting.album_owner', img.album):
-        return HttpResponseForbidden('Http Response Forbidden for show comments')
+        return HttpResponseForbidden(_('У Вас недостаточно прав для просмотра комментариев для этого изображения'))
 
     else:
         comments = Comment.objects.filter(image=img)[:15]
@@ -101,7 +102,7 @@ def save_image(img, alb=None):
     except Exception as e:
 
         print(e)
-        return HttpResponseServerError('server error(', str(e))
+        return HttpResponseServerError(_('Ошибка сервера'), str(e))
 
 
 def get_random_slug(model):

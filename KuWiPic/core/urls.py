@@ -1,8 +1,8 @@
-from django.conf.urls import url, include
+from django.conf.urls import url, include, i18n
 from .views import log_out, SignIn, profile, create_alb, alb_show, alb_edit, delete_album, sign_up, show_users, \
-validate_username
+validate_username, select_lang
 
-urlpatterns = [
+urlpatterns = (
 
     url(r'^signin/$', SignIn.as_view(), name='sign_in'),
     url(r'^signup/$', sign_up, name='reg'),
@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^a/(?P<al_slug>[-\w]+)/del/$', delete_album, name='album_delete'),
     url(r'^u/(?P<username>[-\w]+)/$', profile, name='profile'),
     url(r'^validate/username/$', validate_username, name='validate_username'),
-]
+    url(r'^lang/(?P<code>[-\w]+)/$', select_lang, name='select_lang'),
+)
 
 

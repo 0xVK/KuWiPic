@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 import os
 
 
@@ -12,7 +13,7 @@ class Album(models.Model):
         (PRIVATE, 'Private'),
         (PUBLIC, 'Public'),
         (UNLISTED, 'Unlisted'))
-    name = models.CharField(max_length=35, verbose_name='Назва')
+    name = models.CharField(max_length=35, verbose_name=_('Название'))
     owner = models.ForeignKey(User)
     slug = models.SlugField()
     private_policy = models.CharField(choices=PRIVATE_TYPES, max_length=8, verbose_name='Тип')
@@ -20,8 +21,8 @@ class Album(models.Model):
     edit_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        verbose_name = 'Альбом'
-        verbose_name_plural = 'Альбоми'
+        verbose_name = _('Альбом')
+        verbose_name_plural = _('Альбоми')
         permissions = (
             ('album_owner', 'Album owner'),
 
@@ -56,8 +57,8 @@ class Image(models.Model):
     objects = ImageManager()
 
     class Meta:
-        verbose_name = u'Зображення'
-        verbose_name_plural = u'Зображення'
+        verbose_name = _('Изображения')
+        verbose_name_plural = _(u'Изображения')
         ordering = ('-upload_date', )
 
     def __str__(self):
@@ -71,16 +72,6 @@ class Image(models.Model):
 
         self.image.name = self.slug + '.jpg'
         super(Image, self).save()
-
-        # im = PImage.open(self.image.path)
-        #
-        # width, height = im.size
-        # if width > 860:
-        #     new_width = 860
-        #     new_height = (height * 860) / width
-        #     new_size = new_width, new_height
-        #     im.thumbnail(new_size, PImage.ANTIALIAS)
-        #     im.save(self.image.path)
 
     def delete(self, using=None, keep_parents=False):
 

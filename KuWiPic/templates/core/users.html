@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 
-{% block title %} KuWiPic &mdash; Список користувачів {% endblock %}
+{% block title %} KuWiPic &mdash; {% trans 'Список пользователей' %} {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/style2.css' %}" rel="stylesheet">
@@ -12,11 +13,23 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 text-center">
-          <h3>Список користувачів</h3><br>
+        
+          <form action="/i18n/setlang/" method="POST">
+            {% csrf_token %}
+            <select name="language">
+                <option value="ru">Ru</option>
+                <option value="uk">Ua</option>
+                <option value="en">En</option>
+            </select>
+            <br/>
+            <input type="submit" value="{% trans 'change' %}" />
+          </form>
+         
+          <h3>{% trans 'Список пользователей' %}</h3><br>
           <table class="table table-hover">
           <thead>
-            <td><b>Логін</b></td>
-            <td><b>Дата реєстрації</b></td>
+            <td><b>{% trans 'Логин' %}</b></td>
+            <td><b>{% trans 'Дата регистрации' %}</b></td>
           </thead>
           {% for u in users %}
           <tr>
@@ -26,6 +39,8 @@
           {% endfor %}
           </table>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          
+        </div>
       </div>
 {% endblock body %}
