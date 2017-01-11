@@ -4,7 +4,7 @@ from core.views import delete_photo
 
 
 urlpatterns = (
-    url(r'^$', upload_image, name='upload_image'),
+    url(r'^$', upload_image, name='index'),
     url(r'^last/', last_images, name='last_images'),
     url(r'^i/(?P<slug>[-\w]+)/del/$', delete_photo, name='delete_image'),
     url(r'^i/(?P<slug>[-\w]+)/comment/$', comment_image, name='comment_image'),

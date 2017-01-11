@@ -25,8 +25,9 @@ urlpatterns = i18n.i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^about/', about, name='about'),
     url(r'^', include('image_hosting.urls')),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+
 )
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

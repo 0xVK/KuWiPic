@@ -36,7 +36,7 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand" href="{% url 'index' %}">
               <img src="{% static 'img/kuwipic.png' %}">
           </a>
         </div>
@@ -44,9 +44,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/last">{% trans 'Последние загрузки' %} </a></li>
-            <li><a href="/users">{% trans 'Пользователи' %}</a></li>
-            <li><a href="/about">{% trans 'О сайте' %}</a></li>
+            <li><a href="{% url 'last_images' %}">{% trans 'Последние загрузки' %} </a></li>
+            <li><a href="{% url 'users' %}">{% trans 'Пользователи' %}</a></li>
+            <li><a href="{% url 'about' %}">{% trans 'О сайте' %}</a></li>
             <li>
               <a href="https://github.com/0xVK/KuWiPic" target="_blank">Git Hub
               </a>

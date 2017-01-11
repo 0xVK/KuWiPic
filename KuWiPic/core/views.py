@@ -265,12 +265,9 @@ def show_users(request):
 
 def select_lang(request, code):
 
-    # go_next = request.META.get('HTTP_REFERER', '/')
     go_next = request.GET.get('next', '/')
-    print(request.path)
+    # go_next = request.META.get('HTTP_REFERER', '/')
     response = HttpResponseRedirect(go_next)
-
-    print(go_next)
 
     if code and translation.check_for_language(code):
         translation.activate(code)
