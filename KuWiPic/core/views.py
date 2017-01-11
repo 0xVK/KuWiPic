@@ -265,15 +265,15 @@ def show_users(request):
 
 def select_lang(request, code):
 
-    go_next = request.META.get('HTTP_REFERER', '/')
+    # go_next = request.META.get('HTTP_REFERER', '/')
+    go_next = request.GET.get('next', '/')
+    print(request.path)
     response = HttpResponseRedirect(go_next)
 
+    print(go_next)
+
     if code and translation.check_for_language(code):
-        if hasattr(request, 'session'):
-            request.session[translation.LANGUAGE_SESSION_KEY] = code
-            # request.session['django_language'] = code
-        else:
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, code)
         translation.activate(code)
+        request.session[translation.LANGUAGE_SESSION_KEY] = code
 
     return response

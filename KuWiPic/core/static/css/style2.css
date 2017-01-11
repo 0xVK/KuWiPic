@@ -63,9 +63,11 @@ header#header > nav.navbar.navbar-default{
 
 #lang_menu{
   padding-left: 14px;
+  padding-top: 15px;
 }
 
 #lang_menu > li{
   list-style: none;
   display: inline;
+  
 }

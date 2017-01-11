@@ -13,17 +13,7 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 text-center">
-        
-          <form action="/i18n/setlang/" method="POST">
-            {% csrf_token %}
-            <select name="language">
-                <option value="ru">Ru</option>
-                <option value="uk">Ua</option>
-                <option value="en">En</option>
-            </select>
-            <br/>
-            <input type="submit" value="{% trans 'change' %}" />
-          </form>
+
          
           <h3>{% trans 'Список пользователей' %}</h3><br>
           <table class="table table-hover">
