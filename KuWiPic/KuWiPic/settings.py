@@ -115,8 +115,8 @@ USE_L10N = True
 USE_TZ = True
 
 LOCALE_PATHS = (
-    'locale',
-     # os.path.join(BASE_DIR, 'locale'),
+    # 'locale',
+    os.path.join(BASE_DIR, 'locale'),
 )
 
 
